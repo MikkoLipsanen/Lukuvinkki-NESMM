@@ -1,4 +1,4 @@
-package lukuvinkki.domain;
+package main.java.lukuvinkki.domain;
 
 public class Tip {
 

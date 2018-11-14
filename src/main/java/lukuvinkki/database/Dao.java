@@ -1,4 +1,4 @@
-package lukuvinkki.database;
+package main.java.lukuvinkki.database;
 
 import java.sql.*;
 import java.util.*;

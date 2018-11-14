@@ -1,4 +1,4 @@
-package lukuvinkki.database;
+package main.java.lukuvinkki.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
