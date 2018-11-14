@@ -1,6 +1,5 @@
-package test.java.lukuvinkki;
+package lukuvinkki;
 
-import main.java.lukuvinkki.Application;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -15,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.springframework.test.context.ContextConfiguration;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = Application.class)
+@ContextConfiguration(classes = lukuvinkki.Application.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class HttpRequestTest {
 

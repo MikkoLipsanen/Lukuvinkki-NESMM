@@ -1,6 +1,6 @@
-package main.java.lukuvinkki.controller;
+package lukuvinkki.controller;
 
-import main.java.lukuvinkki.database.TipDao;
+import lukuvinkki.database.TipDao;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
