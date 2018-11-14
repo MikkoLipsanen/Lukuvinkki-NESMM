@@ -28,7 +28,18 @@ repositories {
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+}
 dependencies {
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11.2'
     compile("org.springframework.boot:spring-boot-starter-web")
