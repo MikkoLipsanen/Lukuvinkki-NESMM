@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import main.java.lukuvinkki.domain.Tip;
+import lukuvinkki.domain.Tip;
 
 public class TipDao implements Dao<Tip, Integer> {
 
