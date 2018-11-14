@@ -30,11 +30,10 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11.2'
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-devtools")
     compile("org.springframework.boot:spring-boot-starter-test")
     testCompile("org.springframework.boot:spring-boot-starter-test")
 }
-
-
