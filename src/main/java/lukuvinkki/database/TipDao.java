@@ -1,11 +1,12 @@
-package main.java.lukuvinkki.database;
+package lukuvinkki.database;
+
+import lukuvinkki.domain.Tip;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import main.java.lukuvinkki.domain.Tip;
 
 public class TipDao implements Dao<Tip, Integer> {
 
