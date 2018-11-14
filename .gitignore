@@ -4,3 +4,4 @@ gradle.properties
 .gradle/  
 .nb-gradle/  
 .idea/
+nbproject/
