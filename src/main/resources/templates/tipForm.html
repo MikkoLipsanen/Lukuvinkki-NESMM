@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Lisää lukuvinkki</title>
+        <meta charset="UTF-8" />
+    </head>
+
+    <body>
+    	<br/>
+        <h2>Lisää uusi lukuvinkki!</h2>
+        <br/>
+        
+        <form action="#" th:action="@{/addTip}" th:object="${tip}" method="post">
+            <table>
+                <tr>
+                    <td>Nimi:</td>
+                    <td><input type="text" th:field="*{title}" /></td>
+                </tr>
+                <tr>
+                    <td>Tekijä:</td>
+                    <td><input type="text" th:field="*{author}" /></td>
+                </tr>
+                <tr>
+                    <td>Url:</td>
+                    <td><input type="text" th:field="*{url}" /></td>
+                </tr>
+                <tr>
+                    <td>Kuvaus:</td>
+                    <td><input type="text" th:field="*{description}" /></td>
+                </tr>
+                <tr>
+                    <td><button type="submit">Lisää vinkki</button></td>
+                </tr>
+            </table>
+        </form>
+
+          
+            <br></br>
+            <a href="/index.html">Palaa aloitussivulle</a>
+    </body>
+</html>
