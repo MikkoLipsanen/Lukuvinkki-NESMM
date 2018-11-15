@@ -14,6 +14,9 @@ public class Tip {
         this.url = url;
         this.description = description;
     }
+    public Tip() {
+
+    }
 
     public Integer getId() {
         return id;
@@ -53,5 +56,10 @@ public class Tip {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String toString() {
+        return String.format("Id: %d, Title: %s, Author; %s, Url: %s",
+                this.getId(),this.getTitle(), this.getAuthor(), this.getUrl());
     }
 }
