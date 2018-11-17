@@ -2,12 +2,11 @@ package lukuvinkki.database;
 
 import lukuvinkki.domain.Tip;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TipDao implements Dao<Tip, Integer> {
@@ -37,14 +36,15 @@ public class TipDao implements Dao<Tip, Integer> {
     @Override
     public Tip findOne(Integer id) throws SQLException {
         Tip tip = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try ( Connection conn = DriverManager.getConnection(databaseAddress);
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Tip WHERE Tip.id = ?") ) {
             
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    tip = new Tip(rs.getString("title"), rs.getString("author"), rs.getString("url"), rs.getString("description"));
-                    tip.setId(id);
+                    tip = new Tip(rs.getInt("id"), rs.getString("title"), rs.getString("author"), rs.getString("url"), rs.getString("description"));
+                    tip.setCreated(parseTimestamp(rs.getString("created")));
                 }
             }
             
@@ -61,6 +61,7 @@ public class TipDao implements Dao<Tip, Integer> {
             
             while (rs.next()) {
                 Tip tip = new Tip(rs.getInt("id"), rs.getString("title"), rs.getString("author"), rs.getString("url"), rs.getString("description"));
+                tip.setCreated(parseTimestamp(rs.getString("created")));
                 tips.add(tip);
             }
             
@@ -73,4 +74,14 @@ public class TipDao implements Dao<Tip, Integer> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    private Date parseTimestamp(String date) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date parsedDate;
+        try {
+            parsedDate = formatter.parse(date);
+        } catch (ParseException e) {
+            parsedDate = null;
+        }
+        return parsedDate;
+    }
 }

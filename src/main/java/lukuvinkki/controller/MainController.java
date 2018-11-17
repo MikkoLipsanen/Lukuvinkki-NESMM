@@ -2,8 +2,10 @@ package lukuvinkki.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
+import java.util.Date;
 import lukuvinkki.database.TipDao;
 import lukuvinkki.domain.Tip;
 import org.springframework.stereotype.Controller;
@@ -46,9 +48,11 @@ public class MainController {
         try {
             tips = tipDao.findAll();
         } catch (SQLException e) {
+            e.printStackTrace();
             model.addAttribute("error", "Database error");
             return "error";
         }
+        tips.sort(Comparator.comparing((Tip tip) -> tip.getCreated()).reversed());
         model.addAttribute("tips", tips);
         return "tipList";
    }
