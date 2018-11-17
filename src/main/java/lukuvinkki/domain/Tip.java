@@ -1,14 +1,25 @@
 package lukuvinkki.domain;
 
+import java.util.Date;
+
 public class Tip {
 
-    private Integer id;
+    private int id;
     private String title;
     private String author;
     private String url;
     private String description;
+    private Date created;
 
     public Tip(String title, String author, String url, String description) {
+        this.title = title;
+        this.author = author;
+        this.url = url;
+        this.description = description;
+    }
+
+    public Tip(int id, String title, String author, String url, String description) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.url = url;
@@ -18,7 +29,7 @@ public class Tip {
 
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
@@ -56,6 +67,14 @@ public class Tip {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getCreated() {
+        return this.created;
     }
 
     public String toString() {
