@@ -16,12 +16,10 @@ public class TipDao implements Dao<Tip, Integer> {
         this.databaseAddress = databaseAddress;
     }
 
-    public void addTip(String title, String author, String url, String description) throws SQLException {
-        if (title.equals("") || title.trim().length() == 0 ) {
-            return;
-        }
-        
-        Tip tip = new Tip(title, author, url, description);
+    public void addTip(Tip tip) throws SQLException {
+        //if (title.equals("") || title.trim().length() == 0 ) {
+          //  return;}
+        //Tip tip = new Tip(title, author, url, description);
         Connection connection = DriverManager.getConnection(databaseAddress);
         PreparedStatement stmt = connection.prepareStatement("INSERT INTO Tip(title, author, url, description) VALUES ( ?, ?, ?, ? )");
         stmt.setString(1, tip.getTitle());
