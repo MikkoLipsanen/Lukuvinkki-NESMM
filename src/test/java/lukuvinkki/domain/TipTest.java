@@ -1,4 +1,4 @@
-package test.java.lukuvinkki.domain;
+package lukuvinkki.domain;
 
 import lukuvinkki.domain.Tip;
 import org.junit.Before;
@@ -11,7 +11,11 @@ public class TipTest {
 
     @Before
     public void setUp() {
-        tip = new Tip("title", "author", "url", "description");
+        tip = new Tip();
+        tip.setTitle("title");
+        tip.setAuthor("author");
+        tip.setUrl("url");
+        tip.setDescription("description");
     }
 
     @Test
@@ -24,9 +28,9 @@ public class TipTest {
     
     @Test
     public void setIdSetsIdCorrectly() {
-        int id = 10;
+        long id = 10;
         tip.setId(id);
-        int wanted = tip.getId();
+        long wanted = tip.getId();
         assertEquals(id, wanted);
     }
 
