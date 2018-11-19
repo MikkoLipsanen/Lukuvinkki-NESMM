@@ -17,6 +17,7 @@ import org.openqa.selenium.WebElement;
 
 import javax.annotation.Resource;
 import java.util.List;
+import static org.junit.Assert.assertNull;
 
 public class TipStepdefs extends AbstractStepdefs {
     private WebDriver driver = new HtmlUnitDriver(false);
@@ -47,7 +48,7 @@ public class TipStepdefs extends AbstractStepdefs {
         webElement.click();
     }
     
-    @When("^title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\" are given")
+    @When("^title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\" are given$")
     public void title_author_url_and_description_are_given(String title, String author, String url, String desc) throws Throwable {
         addTip(title, author, url, desc);
     }
@@ -55,21 +56,20 @@ public class TipStepdefs extends AbstractStepdefs {
     @Then("^page contains a list of tips sorted by creation time$")
     public void page_contains_a_list_of_tips_sorted_by_creation_time() throws Throwable {
         List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
-        assertTipTableElement(tipElements.get(0), dummyTip2);
-        assertTipTableElement(tipElements.get(1), dummyTip1);
+        assertTipTableElement(tipElements.get(0), dummyTip2.getTitle(), dummyTip2.getAuthor(), dummyTip2.getUrl(), dummyTip2.getDescription());
+        assertTipTableElement(tipElements.get(1), dummyTip1.getTitle(), dummyTip1.getAuthor(), dummyTip1.getUrl(), dummyTip1.getDescription());
     }
     
-    @Then("^a new tip with is created with title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\"$")
+    @Then("^a new tip is created with title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\"$")
     public void a_new_tip_is_created_with_title_author_url_and_description(String title, String author, String url, String desc) throws Throwable {
         driver.get(this.url);
         WebElement webElement = driver.findElement(By.linkText("täältä"));
         webElement.click();
         List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
-        webElement = tipElements.get(0).findElement(By.cssSelector("title"));
-        assertTrue(webElement.getAttribute("title").equals(title));
+        assertTipTableElement(tipElements.get(0), title, author, url, desc);
     }
     
-    @Then("^a proper form with title, author, url and description is shown")
+    @Then("^a proper form with title, author, url and description is shown$")
     public void a_proper_form_with_title_author_url_and_description_is_shown() throws Throwable {
         List<WebElement> webElements = driver.findElements(By.cssSelector("input"));
         webElements.forEach(element -> assertEquals(element.getAttribute("type"), "text"));
@@ -78,6 +78,15 @@ public class TipStepdefs extends AbstractStepdefs {
         assertEquals(webElements.get(2).getAttribute("name"), "url");
         assertEquals(webElements.get(3).getAttribute("name"), "description");
     }
+    
+//    @Then("^no new tip is created$")
+//    public void no_new_tip_is_created() throws Throwable {
+//        driver.get(this.url);
+//        WebElement webElement = driver.findElement(By.linkText("täältä"));
+//        webElement.click();
+//        List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
+//        assertNull(tipElements.get(0));
+//    }
 
     @After
     public void tearDown() {
@@ -97,16 +106,16 @@ public class TipStepdefs extends AbstractStepdefs {
         element = driver.findElement(By.cssSelector("button"));
         element.submit();
     }
-
-    private void assertTipTableElement(WebElement element, Tip tip) {
+    
+    private void assertTipTableElement(WebElement element, String title, String author, String url, String desc) {
         WebElement titleElement = element.findElement(By.className("title"));
         WebElement authorElement = element.findElement(By.className("author"));
         WebElement urlElement = element.findElement(By.className("url"));
         WebElement descriptionElement = element.findElement(By.className("description"));
-        assertEquals(titleElement.getText(), tip.getTitle());
-        assertEquals(authorElement.getText(), tip.getAuthor());
-        assertEquals(urlElement.getText(), tip.getUrl());
-        assertEquals(descriptionElement.getText(), tip.getDescription());
+        assertEquals(titleElement.getText(), title);
+        assertEquals(authorElement.getText(), author);
+        assertEquals(urlElement.getText(), url);
+        assertEquals(descriptionElement.getText(), desc);
     }
 
     private void saveDummyTips() {
