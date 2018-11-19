@@ -4,9 +4,20 @@
 
 [![codecov](https://codecov.io/gh/MatiasLyyra/Lukuvinkki-NESMM/branch/master/graph/badge.svg)](https://codecov.io/gh/MatiasLyyra/Lukuvinkki-NESMM)
 
-## Discord https://discord.gg/uMY22S
+## Definition of done
+- User story is implemented
+- User story is tested (Unit testing and acceptance tests)
+- Feature passes its acceptance tests
+- User story is ready for deployement
 
-[Ohjelman suorittaminen]  
-gradlew bootRun  
+## Starting server
+
+`gradlew bootRun`  
 ja selaimella osoitteeseen:  
 http://localhost:8080/
+
+## Backlog
+
+[Backlog](https://docs.google.com/spreadsheets/d/1cA0eJKsMFbv5t4-NO9uqrfpEuOwMUji-7ckIPtxH4fo/edit?usp=sharing)
+
+[Sprint 1](https://docs.google.com/spreadsheets/d/1cA0eJKsMFbv5t4-NO9uqrfpEuOwMUji-7ckIPtxH4fo/edit#gid=1920176515?usp=sharing)
