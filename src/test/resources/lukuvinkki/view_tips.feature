@@ -1,5 +1,7 @@
 Feature: User can view tips
-  Scenario: user can view all tips
+
+  Scenario: user can view all tips in correct order
     Given there are some tips created
-    And user selects view tips
-    Then page contains list of tips in correct order
+    And   command view tips is selected
+    Then  page contains a list of tips sorted by creation time
+

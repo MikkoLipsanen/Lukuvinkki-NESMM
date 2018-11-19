@@ -64,6 +64,7 @@ test {
     testLogging {
         events "failed"
         exceptionFormat "full"
+        //showStandardStreams = true
     }
     jacoco {
         excludes = ['*Application', '**com.steadystate*']
