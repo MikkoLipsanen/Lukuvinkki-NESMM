@@ -1,39 +1,30 @@
 package lukuvinkki.domain;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class Tip {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private long id;
     private String title;
     private String author;
     private String url;
     private String description;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    public Tip(String title, String author, String url, String description) {
-        this.title = title;
-        this.author = author;
-        this.url = url;
-        this.description = description;
-    }
-
-    public Tip(int id, String title, String author, String url, String description) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.url = url;
-        this.description = description;
-    }
-    public Tip() {
-
-    }
-
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 

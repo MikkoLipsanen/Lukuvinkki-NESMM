@@ -26,16 +26,38 @@ repositories {
     jcenter()
 }
 
+project.ext {
+    cucumberVersion = "1.2.5"
+    junitVersion = "4.12"
+    seleniumVersion = "2.51.0"
+}
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.11.2'
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-devtools")
-    compile("org.springframework.boot:spring-boot-starter-test")
+    compile("com.h2database:h2")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    testCompile("org.springframework:spring-test")
+    compile group: 'org.seleniumhq.selenium', name: 'htmlunit-driver', version: '2.20'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version: seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: seleniumVersion
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-remote-driver', version: seleniumVersion
+    testCompile("io.github.bonigarcia:webdrivermanager:1.6.2") {
+        exclude group: 'org.seleniumhq.selenium'
+    }
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework:spring-test")
+    testCompile "info.cukes:cucumber-core:" + cucumberVersion
+    testCompile "info.cukes:cucumber-java:" + cucumberVersion
+    testCompile "info.cukes:cucumber-junit:" + cucumberVersion
+    testCompile "info.cukes:cucumber-spring:" + cucumberVersion
+    testCompile "junit:junit:" + junitVersion
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 test {
@@ -44,7 +66,7 @@ test {
         exceptionFormat "full"
     }
     jacoco {
-        excludes = ['*Application']
+        excludes = ['*Application', '**com.steadystate*']
     }
 }
 

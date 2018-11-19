@@ -1,13 +1,10 @@
 package lukuvinkki.controller;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-import java.util.Date;
-import lukuvinkki.database.TipDao;
 import lukuvinkki.domain.Tip;
+import lukuvinkki.repository.TipRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,13 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-public class MainController {
+public class TipController {
 
-    private TipDao tipDao;
-
-    public MainController() {
-        this.tipDao = new TipDao("jdbc:sqlite:tip.db");
-    }
+    @Autowired
+    private TipRepository tipRepository;
 
     @RequestMapping(value="/addTip", method=RequestMethod.GET)
     public String tipForm(Model model){
@@ -32,27 +26,14 @@ public class MainController {
     
     @RequestMapping(value = "/addTip", method = RequestMethod.POST)
     public String tipSubmit(@ModelAttribute Tip tip)
-    {       
-        try {
-          tipDao.addTip(tip);
-          
-        } catch (SQLException e) {
-           e.printStackTrace();
-        }
+    {
+        tipRepository.save(tip);
         return "tipForm";
    }
 
    @RequestMapping(value = "/tips", method = RequestMethod.GET)
    public String viewTips(Model model) {
-        List<Tip> tips = new ArrayList<>();
-        try {
-            tips = tipDao.findAll();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            model.addAttribute("error", "Database error");
-            return "error";
-        }
-        tips.sort(Comparator.comparing((Tip tip) -> tip.getCreated()).reversed());
+        List<Tip> tips = tipRepository.findAllByOrderByCreatedDesc();
         model.addAttribute("tips", tips);
         return "tipList";
    }
