@@ -4,8 +4,12 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
+@Table(name = "tip")
 public class Tip {
 
     @Id
@@ -16,9 +20,19 @@ public class Tip {
     private String url;
     private String description;
 
+    @Transient
+    private String rawTags;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            joinColumns = { @JoinColumn(name = "tip_id") },
+            inverseJoinColumns = { @JoinColumn(name = "tag_id") }
+    )
+    private Set<Tag> tags = new HashSet<>();
 
     public long getId() {
         return id;
@@ -68,8 +82,44 @@ public class Tip {
         return this.created;
     }
 
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
+        tag.getTips().add(this);
+    }
+
+    public void removeTag(Tag tag) {
+        this.tags.remove(tag);
+        tag.getTips().remove(this);
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setRawTags(String rawTags) {
+        this.rawTags = rawTags;
+    }
+
+    public String getRawTags() {
+        return this.rawTags;
+    }
+
+
     public String toString() {
         return String.format("Id: %d, Title: %s, Author; %s, Url: %s",
                 this.getId(),this.getTitle(), this.getAuthor(), this.getUrl());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tip)) return false;
+        Tip tip = (Tip) o;
+        return getId() == tip.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }

@@ -1,12 +1,12 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Lukuvinkki</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <div layout:fragment="page_content">
+    <div>
         <table class="table">
             <thead>
                 <tr>
@@ -14,6 +14,7 @@
                     <td>Author</td>
                     <td>Url</td>
                     <td>Description</td>
+                    <td>Tags</td>
                 </tr>
             </thead>
             <tbody>
@@ -22,6 +23,9 @@
                     <td class="author" th:text="${tip.getAuthor()}"></td>
                     <td class="url" th:text="${tip.getUrl()}"></td>
                     <td class="description" th:text="${tip.getDescription()}"></td>
+                    <td class="tags">
+                        <span class="tag" th:each="tag : ${tip.getTags()}" th:text="${tag.getName()}"></span>
+                    </td>
                 </tr>
             </tbody>
         </table>

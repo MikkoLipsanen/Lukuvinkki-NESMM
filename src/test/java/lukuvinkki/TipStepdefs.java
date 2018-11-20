@@ -1,23 +1,22 @@
 package lukuvinkki;
 
+import cucumber.api.DataTable;
 import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import lukuvinkki.domain.Tip;
 import lukuvinkki.repository.TipRepository;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 import javax.annotation.Resource;
 import java.util.List;
-import static org.junit.Assert.assertNull;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TipStepdefs extends AbstractStepdefs {
     private WebDriver driver = new HtmlUnitDriver(false);
@@ -50,7 +49,12 @@ public class TipStepdefs extends AbstractStepdefs {
     
     @When("^title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\" are given$")
     public void title_author_url_and_description_are_given(String title, String author, String url, String desc) throws Throwable {
-        addTip(title, author, url, desc);
+        addTip(title, author, url, desc, "");
+    }
+
+    @When("^title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\", description \"([^\"]*)\" and tags \"([^\"]*)\" are given$")
+    public void title_author_url_description_and_tags_are_given(String title, String author, String url, String desc, String tags) throws Throwable {
+        addTip(title, author, url, desc, tags);
     }
 
     @Then("^page contains a list of tips sorted by creation time$")
@@ -62,9 +66,6 @@ public class TipStepdefs extends AbstractStepdefs {
     
     @Then("^a new tip is created with title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\"$")
     public void a_new_tip_is_created_with_title_author_url_and_description(String title, String author, String url, String desc) throws Throwable {
-        driver.get(this.url);
-        WebElement webElement = driver.findElement(By.linkText("täältä"));
-        webElement.click();
         List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
         assertTipTableElement(tipElements.get(0), title, author, url, desc);
     }
@@ -73,28 +74,27 @@ public class TipStepdefs extends AbstractStepdefs {
     public void a_proper_form_with_title_author_url_and_description_is_shown() throws Throwable {
         List<WebElement> webElements = driver.findElements(By.cssSelector("input"));
         webElements.forEach(element -> assertEquals(element.getAttribute("type"), "text"));
-        assertEquals(webElements.get(0).getAttribute("name"), "title");
-        assertEquals(webElements.get(1).getAttribute("name"), "author");
-        assertEquals(webElements.get(2).getAttribute("name"), "url");
-        assertEquals(webElements.get(3).getAttribute("name"), "description");
+        assertEquals("title" , webElements.get(0).getAttribute("name"));
+        assertEquals("author", webElements.get(1).getAttribute("name"));
+        assertEquals("url", webElements.get(2).getAttribute("name"));
+        assertEquals("description" ,webElements.get(3).getAttribute("name"));
+        assertEquals("rawTags", webElements.get(4).getAttribute("name"));
     }
-    
-//    @Then("^no new tip is created$")
-//    public void no_new_tip_is_created() throws Throwable {
-//        driver.get(this.url);
-//        WebElement webElement = driver.findElement(By.linkText("täältä"));
-//        webElement.click();
-//        List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
-//        assertNull(tipElements.get(0));
-//    }
+
+    @Then("^following tags are found in newly created tip:$")
+    public void following_tags_are_found_in_newly_created_tip(DataTable dt) {
+        List<String> tags = dt.asList(String.class);
+        List<WebElement> rows = driver.findElements(By.cssSelector(".table tbody tr"));
+        System.out.println("Current url: " + driver.getCurrentUrl());
+        assertTagsInTipTableRow(rows.get(0), tags);
+    }
 
     @After
     public void tearDown() {
         driver.quit();
     }
     
-    private void addTip(String title, String author, String url, String desc) {
-        pageContains("Lisää uusi lukuvinkki!");
+    private void addTip(String title, String author, String url, String desc, String tags) {
         WebElement element = driver.findElement(By.cssSelector("input[name='title']"));
         element.sendKeys(title);
         element = driver.findElement(By.cssSelector("input[name='author']"));
@@ -103,8 +103,17 @@ public class TipStepdefs extends AbstractStepdefs {
         element.sendKeys(url);
         element = driver.findElement(By.cssSelector("input[name='description']"));
         element.sendKeys(desc);
-        element = driver.findElement(By.cssSelector("button"));
+        element = driver.findElement(By.cssSelector("input[name='rawTags']"));
+        element.sendKeys(tags);
         element.submit();
+    }
+
+    private void assertTagsInTipTableRow(WebElement row, List<String> tags) {
+        List<WebElement> tagElements = row.findElements(By.className("tag"));
+        assertEquals("Correct amount of tags are added", tags.size(), tagElements.size());
+        for (WebElement tagElement : tagElements) {
+            assertTrue("Tag element is found", tags.contains(tagElement.getText()));
+        }
     }
     
     private void assertTipTableElement(WebElement element, String title, String author, String url, String desc) {
