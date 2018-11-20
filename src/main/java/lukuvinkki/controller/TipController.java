@@ -55,6 +55,7 @@ public class TipController {
             Tag tag = tagRepository.findTagByName(rawTag);
             if (tag == null) {
                 tag = new Tag(rawTag);
+                tagRepository.save(tag);
             }
             tags.add(tag);
         }

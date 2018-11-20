@@ -15,7 +15,17 @@ Feature: User can create a new tip
     When title "Some book", author "Shakespeare", url "https://example.com", description "Foobar" and tags "book; tag; classics" are given
     And command view tips is selected
     Then following tags are found in newly created tip:
-    |book|tag|classics|
+      |book|tag|classics|
+
+  Scenario: user can create a new tip with existing tags
+    Given there are some tips created
+    And command new tip is selected
+    When title "Some book", author "Shakespeare", url "https://example.com", description "Foobar" and tags "foo; bar; baz" are given
+    And command view tips is selected
+    Then following tags are found in newly created tip:
+      |foo|bar|baz|
+    And only following tags are created:
+      |foo|bar|baz|
 #Scenario: user can not create a new tip without any values
 #    Given command new tip is selected
 #    When  title "", author "", url "" and description "" are given

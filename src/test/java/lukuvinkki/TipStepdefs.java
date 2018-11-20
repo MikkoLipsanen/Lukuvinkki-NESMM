@@ -5,7 +5,9 @@ import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import lukuvinkki.domain.Tag;
 import lukuvinkki.domain.Tip;
+import lukuvinkki.repository.TagRepository;
 import lukuvinkki.repository.TipRepository;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,11 +21,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TipStepdefs extends AbstractStepdefs {
-    private WebDriver driver = new HtmlUnitDriver(false);
+
+    private WebDriver driver = new HtmlUnitDriver(true);
     private String url = "http://localhost:" + 8080 + "/";
     private Tip dummyTip1, dummyTip2;
     @Resource
     private TipRepository tipRepository;
+
+    @Resource
+    private TagRepository tagRepository;
 
 
     @Given("^there are some tips created$")
@@ -85,12 +91,20 @@ public class TipStepdefs extends AbstractStepdefs {
     public void following_tags_are_found_in_newly_created_tip(DataTable dt) {
         List<String> tags = dt.asList(String.class);
         List<WebElement> rows = driver.findElements(By.cssSelector(".table tbody tr"));
-        System.out.println("Current url: " + driver.getCurrentUrl());
         assertTagsInTipTableRow(rows.get(0), tags);
+    }
+
+    @Then("^only following tags are created:$")
+    public void only_following_tags_are_created(DataTable dt) throws Throwable {
+        List<String> tags = dt.asList(String.class);
+        assertCreatedTags(tags);
     }
 
     @After
     public void tearDown() {
+        // Don't change the order of these delete statements
+        tipRepository.deleteAll();
+        tagRepository.deleteAll();
         driver.quit();
     }
     
@@ -127,18 +141,32 @@ public class TipStepdefs extends AbstractStepdefs {
         assertEquals(descriptionElement.getText(), desc);
     }
 
+    private void assertCreatedTags(List<String> tagNames) {
+        List<Tag> tags = tagRepository.findAll();
+        assertEquals("Expected amount of tags", tagNames.size(), tags.size());
+        for (Tag tag : tags) {
+            assertTrue(tagNames.contains(tag.getName()));
+        }
+    }
+
     private void saveDummyTips() {
+        Tag fooTag = new Tag("foo");
+        Tag barTag = new Tag("bar");
+        tagRepository.save(fooTag);
+        tagRepository.save(barTag);
         dummyTip1 = new Tip();
         dummyTip1.setAuthor("Seppo");
         dummyTip1.setTitle("Sepon tarinat");
         dummyTip1.setUrl("https://google.com");
         dummyTip1.setDescription("Toiseksi mahtavin tarina ikinä");
+        dummyTip1.addTag(fooTag);
         tipRepository.save(dummyTip1);
         dummyTip2 = new Tip();
         dummyTip2.setAuthor("Keijo");
         dummyTip2.setTitle("Keijon tarinat");
         dummyTip2.setUrl("https://example.com");
         dummyTip2.setDescription("Mahtavin tarina ikinä");
+        dummyTip2.addTag(barTag);
         tipRepository.save(dummyTip2);
     }
 

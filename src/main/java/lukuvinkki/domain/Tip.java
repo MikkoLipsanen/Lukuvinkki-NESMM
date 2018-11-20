@@ -27,7 +27,7 @@ public class Tip {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             joinColumns = { @JoinColumn(name = "tip_id") },
             inverseJoinColumns = { @JoinColumn(name = "tag_id") }
