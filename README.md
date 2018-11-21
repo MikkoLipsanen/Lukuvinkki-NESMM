@@ -4,6 +4,10 @@
 
 [![codecov](https://codecov.io/gh/MatiasLyyra/Lukuvinkki-NESMM/branch/master/graph/badge.svg)](https://codecov.io/gh/MatiasLyyra/Lukuvinkki-NESMM)
 
+## Application in Heroku
+
+[Heroku](https://lukuvinkki-nesmm.herokuapp.com/)
+
 ## Definition of done
 - User story is implemented
 - User story is tested (Unit testing and acceptance tests)
