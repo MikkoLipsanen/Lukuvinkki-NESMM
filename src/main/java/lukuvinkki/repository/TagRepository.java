@@ -8,5 +8,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface TagRepository extends JpaRepository<Tag, Long> {
     Tag findTagByName(String name);
-    List<Tag> findAllByName(String name);
+    List<Tag> findByNameIgnoreCaseContaining(String name);
 }

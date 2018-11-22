@@ -1,17 +1,17 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Lukuvinkki</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="/css/style.css">
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
     <div>
-        <form action="#" th:action="@{/search}" method="get">
+        <form action="#" th:action="@{/search}" method="post">
             <table>
                 <tr>
                     <td>Haku:</td>
-                    <td><input name="search" type="text" th:value="${keyword}"></td>
+                    <td><input name="keyword" type="text"/></td>
                 </tr>
                 <tr>
                     <td><button type="submit">Hae</button></td>
