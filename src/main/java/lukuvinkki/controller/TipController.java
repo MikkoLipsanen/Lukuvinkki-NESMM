@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class TipController {
@@ -54,14 +57,25 @@ public class TipController {
         return "tipList";
    }
    
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String searchTips(Model model, String keyword) {
-        List<Tag> tags = tagRepository.findAllByName(keyword);
-        List<Tip> tips = new ArrayList<>();
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public String searchTips(@RequestParam("keyword") String keyword, Model model) {
+        
+        // PRIMARY SEARCH BY TAGS OF TIPS
+        List<Tag> tags = tagRepository.findByNameIgnoreCaseContaining(keyword);
+        List<Tip> primaryTips = new ArrayList<>();
         for (Tag tag : tags) {
-            tips.add(tipRepository.findByTags(tag.getName()));
+            tag.getTips().forEach(tip -> primaryTips.add(tip));
         }
-        model.addAttribute("tips", tips);
+        Collections.sort(primaryTips, (tip1, tip2) -> tip2.getCreated().compareTo(tip1.getCreated()));
+        
+        // SECONDARY SEARCH BY TITLES AND AUTHORS
+        List<Tip> secondaryTips = tipRepository.findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContainingOrderByCreatedDesc(keyword, keyword);
+        
+        // MERGE TWO LISTS
+        secondaryTips.removeAll(primaryTips);
+        primaryTips.addAll(secondaryTips);
+        
+        model.addAttribute("tips", primaryTips);
         return "tipList";
     }
 
@@ -79,6 +93,7 @@ public class TipController {
     }
     
     private void addTestData() {
+        testData = true;
         Tip tip = new Tip();
         tip.setTitle("Examples in Each Chapter");
         tip.setAuthor("SELECT * FROM Author");
