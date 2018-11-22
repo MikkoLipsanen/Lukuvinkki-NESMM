@@ -23,11 +23,12 @@
         <table class="table">
             <thead>
                 <tr>
-                    <td>Title</td>
-                    <td>Author</td>
-                    <td>Url</td>
-                    <td>Description</td>
-                    <td>Tags</td>
+                    <td>Otsikko</td>
+                    <td>Tekijä</td>
+                    <td>WWW</td>
+                    <td>Sisältö</td>
+                    <td>Tagit</td>
+                    <td>Tehty</td>
                 </tr>
             </thead>
             <tbody>
@@ -39,6 +40,7 @@
                     <td class="tags">
                         <span class="tag" th:each="tag : ${tip.getTags()}" th:text="${tag.getName()}"></span>
                     </td>
+                    <td class="created" th:text="${tip.getCreated()}"></td>
                 </tr>
             </tbody>
         </table>

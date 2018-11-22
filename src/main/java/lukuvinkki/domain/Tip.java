@@ -108,8 +108,8 @@ public class Tip {
 
 
     public String toString() {
-        return String.format("Id: %d, Title: %s, Author; %s, Url: %s",
-                this.getId(),this.getTitle(), this.getAuthor(), this.getUrl());
+        return String.format("Id: %d, Title: %s, Author; %s, Url: %s, Created: %s",
+                this.getId(),this.getTitle(), this.getAuthor(), this.getUrl(), this.getCreated());
     }
 
     @Override
