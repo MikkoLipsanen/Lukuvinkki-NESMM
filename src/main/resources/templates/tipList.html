@@ -7,6 +7,19 @@
 </head>
 <body>
     <div>
+        <form action="#" th:action="@{/search}" method="get">
+            <table>
+                <tr>
+                    <td>Haku:</td>
+                    <td><input name="search" type="text" th:value="${keyword}"></td>
+                </tr>
+                <tr>
+                    <td><button type="submit">Hae</button></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div>
         <table class="table">
             <thead>
                 <tr>
