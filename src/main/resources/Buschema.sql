@@ -1,0 +1,7 @@
+-- CREATE TABLE Tip (
+--     id INTEGER PRIMARY KEY,
+--     title VARCHAR(1024) NOT NULL,
+--     author VARCHAR(1024),
+--     description VARCHAR(2048),
+--     url VARCHAR(1024)
+--     );
