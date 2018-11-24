@@ -5,6 +5,7 @@ import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import java.util.ArrayList;
 import lukuvinkki.domain.Tag;
 import lukuvinkki.domain.Tip;
 import lukuvinkki.repository.TagRepository;
@@ -31,7 +32,7 @@ public class TipStepdefs extends AbstractStepdefs {
     @Resource
     private TagRepository tagRepository;
 
-
+    
     @Given("^there are some tips created$")
     public void there_are_some_tips_created() throws Throwable {
         saveDummyTips();
@@ -53,6 +54,22 @@ public class TipStepdefs extends AbstractStepdefs {
         webElement.click();
     }
     
+    @Given("^tip with tag \"([^\"]*)\" is created$")
+    public void tip_with_proper_tag_is_created(String tag) throws Throwable {
+        driver.get(url);
+        WebElement webElement = driver.findElement(By.linkText("lukuvinkki"));
+        webElement.click();
+        addTip("plaah", "plaah", "plaah", "plaah", tag);
+    }
+    
+    @Given("^tip with misspelled tag \"([^\"]*)\" is created$")
+    public void tip_with_misspelled_tag_is_created(String tag) throws Throwable {
+        driver.get(url);
+        WebElement webElement = driver.findElement(By.linkText("lukuvinkki"));
+        webElement.click();
+        addTip("plaah", "plaah", "plaah", "plaah", tag);
+    }
+    
     @When("^title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\" are given$")
     public void title_author_url_and_description_are_given(String title, String author, String url, String desc) throws Throwable {
         addTip(title, author, url, desc, "");
@@ -62,6 +79,27 @@ public class TipStepdefs extends AbstractStepdefs {
     public void title_author_url_description_and_tags_are_given(String title, String author, String url, String desc, String tags) throws Throwable {
         addTip(title, author, url, desc, tags);
     }
+    
+    @When("^command search is selected with keyword \"([^\"]*)\"$")
+    public void command_view_tips_is_selected(String keyword) throws Throwable {
+        driver.get(url);
+        WebElement webElement = driver.findElement(By.linkText("täältä"));
+        webElement.click();
+        webElement = driver.findElement(By.name("keyword"));
+        webElement.sendKeys(keyword);
+        webElement.submit();
+    }
+
+    @When("^command search is selected with invalid keyword \"([^\"]*)\"$")
+    public void command_view_tips_is_selected_(String keyword) throws Throwable {
+        driver.get(url);
+        WebElement webElement = driver.findElement(By.linkText("täältä"));
+        webElement.click();
+        webElement = driver.findElement(By.name("keyword"));
+        webElement.sendKeys(keyword);
+        webElement.submit();
+    }
+    
 
     @Then("^page contains a list of tips sorted by creation time$")
     public void page_contains_a_list_of_tips_sorted_by_creation_time() throws Throwable {
@@ -99,7 +137,19 @@ public class TipStepdefs extends AbstractStepdefs {
         List<String> tags = dt.asList(String.class);
         assertCreatedTags(tags);
     }
+    
+    @Then("^list contains tip with tag \"([^\"]*)\"$")
+    public void list_contains_tip_with_tag(String tag) throws Throwable {
+        List<String> tags = new ArrayList();
+        tags.add(tag);
+        List<WebElement> rows = driver.findElements(By.cssSelector(".table tbody tr"));
+        assertTagsInTipTableRow(rows.get(0), tags);
+    }
 
+    @Then("^list doesnt contain tip with tag \"([^\"]*)\"$")
+    public void list_doesnt_contain_tip_with_tag(String tag) throws Throwable {
+        assertTrue(!driver.getPageSource().contains(tag));
+    }
     @After
     public void tearDown() {
         // Don't change the order of these delete statements
@@ -140,6 +190,8 @@ public class TipStepdefs extends AbstractStepdefs {
         assertEquals(urlElement.getText(), url);
         assertEquals(descriptionElement.getText(), desc);
     }
+    
+    
 
     private void assertCreatedTags(List<String> tagNames) {
         List<Tag> tags = tagRepository.findAll();
