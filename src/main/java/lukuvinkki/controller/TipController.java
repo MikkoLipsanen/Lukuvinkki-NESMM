@@ -39,7 +39,7 @@ public class TipController {
             tip.addTag(tag);
         }
         tipRepository.save(tip);
-        return "tipForm";
+        return "redirect:/tips";
    }
 
    @RequestMapping(value = "/tips", method = RequestMethod.GET)
