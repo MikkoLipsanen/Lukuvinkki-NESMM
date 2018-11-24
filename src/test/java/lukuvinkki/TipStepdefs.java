@@ -54,7 +54,7 @@ public class TipStepdefs extends AbstractStepdefs {
         webElement.click();
     }
     
-    @Given("^tip with tag \"([^\"]*)\" is created$")
+    @Given("^tip with proper tag \"([^\"]*)\" is created$")
     public void tip_with_proper_tag_is_created(String tag) throws Throwable {
         driver.get(url);
         WebElement webElement = driver.findElement(By.linkText("lukuvinkki"));
