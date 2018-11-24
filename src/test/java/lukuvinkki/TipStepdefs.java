@@ -31,7 +31,6 @@ public class TipStepdefs extends AbstractStepdefs {
     @Resource
     private TagRepository tagRepository;
 
-
     @Given("^there are some tips created$")
     public void there_are_some_tips_created() throws Throwable {
         saveDummyTips();
@@ -44,7 +43,7 @@ public class TipStepdefs extends AbstractStepdefs {
         WebElement webElement = driver.findElement(By.linkText("täältä"));
         webElement.click();
     }
-    
+
     @Given("^command new tip is selected$")
     public void command_new_tip_is_selected() throws Throwable {
         driver.get(url);
@@ -53,6 +52,13 @@ public class TipStepdefs extends AbstractStepdefs {
         webElement.click();
     }
     
+    @Given("^command submit tip is selected$")
+    public void command_submit_tip_is_selected() throws Throwable {
+        driver.get(url + "addTip");
+        WebElement webElement = driver.findElement(By.name("submit"));
+        webElement.click();
+    }
+
     @When("^title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\" are given$")
     public void title_author_url_and_description_are_given(String title, String author, String url, String desc) throws Throwable {
         addTip(title, author, url, desc, "");
@@ -69,21 +75,21 @@ public class TipStepdefs extends AbstractStepdefs {
         assertTipTableElement(tipElements.get(0), dummyTip2.getTitle(), dummyTip2.getAuthor(), dummyTip2.getUrl(), dummyTip2.getDescription());
         assertTipTableElement(tipElements.get(1), dummyTip1.getTitle(), dummyTip1.getAuthor(), dummyTip1.getUrl(), dummyTip1.getDescription());
     }
-    
+
     @Then("^a new tip is created with title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\"$")
     public void a_new_tip_is_created_with_title_author_url_and_description(String title, String author, String url, String desc) throws Throwable {
         List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
         assertTipTableElement(tipElements.get(0), title, author, url, desc);
     }
-    
+
     @Then("^a proper form with title, author, url and description is shown$")
     public void a_proper_form_with_title_author_url_and_description_is_shown() throws Throwable {
         List<WebElement> webElements = driver.findElements(By.cssSelector("input"));
         webElements.forEach(element -> assertEquals(element.getAttribute("type"), "text"));
-        assertEquals("title" , webElements.get(0).getAttribute("name"));
+        assertEquals("title", webElements.get(0).getAttribute("name"));
         assertEquals("author", webElements.get(1).getAttribute("name"));
         assertEquals("url", webElements.get(2).getAttribute("name"));
-        assertEquals("description" ,webElements.get(3).getAttribute("name"));
+        assertEquals("description", webElements.get(3).getAttribute("name"));
         assertEquals("rawTags", webElements.get(4).getAttribute("name"));
     }
 
@@ -99,6 +105,11 @@ public class TipStepdefs extends AbstractStepdefs {
         List<String> tags = dt.asList(String.class);
         assertCreatedTags(tags);
     }
+    
+    @Then("^the main page is shown$")
+    public void the_main_page_is_shown() throws Throwable {
+        pageContains("Lukuvinkit");
+    }
 
     @After
     public void tearDown() {
@@ -107,7 +118,7 @@ public class TipStepdefs extends AbstractStepdefs {
         tagRepository.deleteAll();
         driver.quit();
     }
-    
+
     private void addTip(String title, String author, String url, String desc, String tags) {
         WebElement element = driver.findElement(By.cssSelector("input[name='title']"));
         element.sendKeys(title);
@@ -129,7 +140,7 @@ public class TipStepdefs extends AbstractStepdefs {
             assertTrue("Tag element is found", tags.contains(tagElement.getText()));
         }
     }
-    
+
     private void assertTipTableElement(WebElement element, String title, String author, String url, String desc) {
         WebElement titleElement = element.findElement(By.className("title"));
         WebElement authorElement = element.findElement(By.className("author"));
