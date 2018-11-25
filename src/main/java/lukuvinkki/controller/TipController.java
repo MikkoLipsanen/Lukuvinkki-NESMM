@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class TipController {
-
     @Autowired
     private TipRepository tipRepository;
 
@@ -48,6 +49,34 @@ public class TipController {
         model.addAttribute("tips", tips);
         return "tipList";
    }
+   
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public String searchTips(@RequestParam("keyword") String keyword, Model model) {
+        
+        if (keyword.isEmpty()) {
+            List<Tip> allTips = tipRepository.findAllByOrderByCreatedDesc();
+            model.addAttribute("tips", allTips);
+            return "tipList";
+        }
+        
+        // PRIMARY SEARCH BY TAGS OF TIPS
+        List<Tag> tags = tagRepository.findByNameIgnoreCaseContaining(keyword);
+        List<Tip> primaryTips = new ArrayList<>();
+        for (Tag tag : tags) {
+            tag.getTips().forEach(tip -> primaryTips.add(tip));
+        }
+        Collections.sort(primaryTips, (tip1, tip2) -> tip2.getCreated().compareTo(tip1.getCreated()));
+        
+        // SECONDARY SEARCH BY TITLES AND AUTHORS
+        List<Tip> secondaryTips = tipRepository.findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContainingOrderByCreatedDesc(keyword, keyword);
+        
+        // MERGE TWO LISTS
+        secondaryTips.removeAll(primaryTips);
+        primaryTips.addAll(secondaryTips);
+        
+        model.addAttribute("tips", primaryTips);
+        return "tipList";
+    }
 
     private List<Tag> getOrCreateTag(List<String> rawTags) {
         List<Tag> tags = new ArrayList<>();

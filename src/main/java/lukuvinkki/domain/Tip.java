@@ -32,6 +32,8 @@ public class Tip {
             joinColumns = { @JoinColumn(name = "tip_id") },
             inverseJoinColumns = { @JoinColumn(name = "tag_id") }
     )
+
+    
     private Set<Tag> tags = new HashSet<>();
 
     public long getId() {
@@ -106,8 +108,8 @@ public class Tip {
 
 
     public String toString() {
-        return String.format("Id: %d, Title: %s, Author; %s, Url: %s",
-                this.getId(),this.getTitle(), this.getAuthor(), this.getUrl());
+        return String.format("Id: %d, Title: %s, Author; %s, Url: %s, Created: %s",
+                this.getId(),this.getTitle(), this.getAuthor(), this.getUrl(), this.getCreated());
     }
 
     @Override

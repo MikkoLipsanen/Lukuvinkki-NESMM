@@ -9,4 +9,5 @@ import java.util.List;
 @Service
 public interface TipRepository extends JpaRepository<Tip, Long> {
     List<Tip> findAllByOrderByCreatedDesc();
+    List<Tip> findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContainingOrderByCreatedDesc(String title, String author);
 }
