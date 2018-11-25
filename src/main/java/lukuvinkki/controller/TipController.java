@@ -53,6 +53,12 @@ public class TipController {
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String searchTips(@RequestParam("keyword") String keyword, Model model) {
         
+        if (keyword.isEmpty()) {
+            List<Tip> allTips = tipRepository.findAllByOrderByCreatedDesc();
+            model.addAttribute("tips", allTips);
+            return "tipList";
+        }
+        
         // PRIMARY SEARCH BY TAGS OF TIPS
         List<Tag> tags = tagRepository.findByNameIgnoreCaseContaining(keyword);
         List<Tip> primaryTips = new ArrayList<>();
