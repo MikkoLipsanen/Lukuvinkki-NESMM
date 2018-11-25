@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,14 @@ public class TipController {
         List<Tip> tips = tipRepository.findAllByOrderByCreatedDesc();
         model.addAttribute("tips", tips);
         return "tipList";
+   }
+   
+   @RequestMapping(value = "/tips/{tipId}", method = RequestMethod.POST)
+   public String statusSubmit(@PathVariable Long tipId, Model model){
+       Tip tip = tipRepository.findTipById(tipId);
+       tip.setStatus(true);
+       tipRepository.save(tip);
+       return "tipList";
    }
 
     private List<Tag> getOrCreateTag(List<String> rawTags) {

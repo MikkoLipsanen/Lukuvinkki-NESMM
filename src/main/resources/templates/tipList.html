@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Lukuvinkki</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/style.css"></link>
 </head>
 <body>
     <div>
@@ -15,6 +15,7 @@
                     <td>Url</td>
                     <td>Description</td>
                     <td>Tags</td>
+                    <td>Status</td>
                 </tr>
             </thead>
             <tbody>
@@ -25,6 +26,11 @@
                     <td class="description" th:text="${tip.getDescription()}"></td>
                     <td class="tags">
                         <span class="tag" th:each="tag : ${tip.getTags()}" th:text="${tag.getName()}"></span>
+                    </td>
+                    <td class="status">
+                        <span th:if="${tip.getStatus() = false}">
+                            <button type="submit" name="markAsRead" th:href="@{/tips/{tipId}(tipId=${tip.getId()})}">Mark as Read</button></span>
+                        <span th:unless="${tip.getStatus() = true}">Read</span>
                     </td>
                 </tr>
             </tbody>
