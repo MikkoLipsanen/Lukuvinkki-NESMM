@@ -19,7 +19,7 @@ Feature: User can search tips
     Then  page contains a list of tips sorted by creation time
 
   Scenario: search shows tag matches before matches by other fields
-    Given there are many tips created
+    Given there are some tips created
     And   command search is selected
     When  search is done with keyword "foo"
     Then  page contains a list of tips with tag matches shown first

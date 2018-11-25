@@ -37,11 +37,6 @@ public class TipStepdefs extends AbstractStepdefs {
     public void there_are_some_tips_created() throws Throwable {
         saveDummyTips();
     }
-    
-    @Given("^there are many tips created$")
-    public void there_are_many_tips_created() throws Throwable {
-        saveDummyTips();
-    }
 
     @Given("^command view tips is selected$")
     public void command_view_tips_is_selected() throws Throwable {
