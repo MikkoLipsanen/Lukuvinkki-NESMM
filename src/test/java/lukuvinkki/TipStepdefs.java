@@ -150,7 +150,8 @@ public class TipStepdefs extends AbstractStepdefs {
         tags.add(tag);
         List<WebElement> rows = driver.findElements(By.cssSelector(".table tbody tr"));
         assertTagsInTipTableRow(rows.get(0), tags);
-
+    }
+        
     @Then("^the main page is shown$")
     public void the_main_page_is_shown() throws Throwable {
         pageContains("Lukuvinkit");
