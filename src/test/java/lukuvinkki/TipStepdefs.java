@@ -25,7 +25,7 @@ public class TipStepdefs extends AbstractStepdefs {
 
     private WebDriver driver = new HtmlUnitDriver(true);
     private String url = "http://localhost:" + 8080 + "/";
-    private Tip dummyTip1, dummyTip2;
+    private Tip dummyTip1, dummyTip2, dummyTip3, dummyTip4;
     @Resource
     private TipRepository tipRepository;
 
@@ -35,6 +35,11 @@ public class TipStepdefs extends AbstractStepdefs {
     
     @Given("^there are some tips created$")
     public void there_are_some_tips_created() throws Throwable {
+        saveDummyTips();
+    }
+    
+    @Given("^there are many tips created$")
+    public void there_are_many_tips_created() throws Throwable {
         saveDummyTips();
     }
 
@@ -54,16 +59,15 @@ public class TipStepdefs extends AbstractStepdefs {
         webElement.click();
     }
     
-    @Given("^tip with proper tag \"([^\"]*)\" is created$")
-    public void tip_with_proper_tag_is_created(String tag) throws Throwable {
+    @Given("^command search is selected$")
+    public void command_search_is_selected() throws Throwable {
         driver.get(url);
-        WebElement webElement = driver.findElement(By.linkText("lukuvinkki"));
+        WebElement webElement = driver.findElement(By.linkText("täältä"));
         webElement.click();
-        addTip("plaah", "plaah", "plaah", "plaah", tag);
     }
     
-    @Given("^tip with misspelled tag \"([^\"]*)\" is created$")
-    public void tip_with_misspelled_tag_is_created(String tag) throws Throwable {
+    @Given("^tip is created with tag \"([^\"]*)\"$")
+    public void tip_is_created_with_tag(String tag) throws Throwable {
         driver.get(url);
         WebElement webElement = driver.findElement(By.linkText("lukuvinkki"));
         webElement.click();
@@ -80,32 +84,31 @@ public class TipStepdefs extends AbstractStepdefs {
         addTip(title, author, url, desc, tags);
     }
     
-    @When("^command search is selected with keyword \"([^\"]*)\"$")
-    public void command_view_tips_is_selected(String keyword) throws Throwable {
-        driver.get(url);
-        WebElement webElement = driver.findElement(By.linkText("täältä"));
-        webElement.click();
-        webElement = driver.findElement(By.name("keyword"));
-        webElement.sendKeys(keyword);
-        webElement.submit();
+    @When("^search is done with keyword \"([^\"]*)\"$")
+    public void command_search_is_selected_with_keyword(String keyword) throws Throwable {
+        searchTips(keyword);
     }
 
-    @When("^command search is selected with invalid keyword \"([^\"]*)\"$")
-    public void command_view_tips_is_selected_(String keyword) throws Throwable {
-        driver.get(url);
-        WebElement webElement = driver.findElement(By.linkText("täältä"));
-        webElement.click();
-        webElement = driver.findElement(By.name("keyword"));
-        webElement.sendKeys(keyword);
-        webElement.submit();
+    @When("^search is done with mismatching keyword \"([^\"]*)\"$")
+    public void command_search_is_selected_with_mismatching_keyword(String keyword) throws Throwable {
+        searchTips(keyword);
     }
     
+    @Then("^page contains a list of tips with tag matches shown first")
+    public void page_contains_a_list_of_tips_with_tag_matches_shown_first() throws Throwable {
+        List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
+        assertTipTableElement(tipElements.get(0), dummyTip3.getTitle(), dummyTip3.getAuthor(), dummyTip3.getUrl(), dummyTip3.getDescription()); // tag match, created later
+        assertTipTableElement(tipElements.get(1), dummyTip1.getTitle(), dummyTip1.getAuthor(), dummyTip1.getUrl(), dummyTip1.getDescription()); // tag match
+        assertTipTableElement(tipElements.get(2), dummyTip4.getTitle(), dummyTip4.getAuthor(), dummyTip4.getUrl(), dummyTip4.getDescription()); // title match
+    }
 
     @Then("^page contains a list of tips sorted by creation time$")
     public void page_contains_a_list_of_tips_sorted_by_creation_time() throws Throwable {
         List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
-        assertTipTableElement(tipElements.get(0), dummyTip2.getTitle(), dummyTip2.getAuthor(), dummyTip2.getUrl(), dummyTip2.getDescription());
-        assertTipTableElement(tipElements.get(1), dummyTip1.getTitle(), dummyTip1.getAuthor(), dummyTip1.getUrl(), dummyTip1.getDescription());
+        assertTipTableElement(tipElements.get(0), dummyTip4.getTitle(), dummyTip4.getAuthor(), dummyTip4.getUrl(), dummyTip4.getDescription());
+        assertTipTableElement(tipElements.get(1), dummyTip3.getTitle(), dummyTip3.getAuthor(), dummyTip3.getUrl(), dummyTip3.getDescription());
+        assertTipTableElement(tipElements.get(2), dummyTip2.getTitle(), dummyTip2.getAuthor(), dummyTip2.getUrl(), dummyTip2.getDescription());
+        assertTipTableElement(tipElements.get(3), dummyTip1.getTitle(), dummyTip1.getAuthor(), dummyTip1.getUrl(), dummyTip1.getDescription());
     }
     
     @Then("^a new tip is created with title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\"$")
@@ -150,6 +153,7 @@ public class TipStepdefs extends AbstractStepdefs {
     public void list_doesnt_contain_tip_with_tag(String tag) throws Throwable {
         assertTrue(!driver.getPageSource().contains(tag));
     }
+    
     @After
     public void tearDown() {
         // Don't change the order of these delete statements
@@ -191,8 +195,6 @@ public class TipStepdefs extends AbstractStepdefs {
         assertEquals(descriptionElement.getText(), desc);
     }
     
-    
-
     private void assertCreatedTags(List<String> tagNames) {
         List<Tag> tags = tagRepository.findAll();
         assertEquals("Expected amount of tags", tagNames.size(), tags.size());
@@ -200,12 +202,20 @@ public class TipStepdefs extends AbstractStepdefs {
             assertTrue(tagNames.contains(tag.getName()));
         }
     }
+    
+    private void searchTips(String keyword) {
+        WebElement webElement = driver.findElement(By.name("keyword"));
+        webElement.sendKeys(keyword);
+        webElement.submit();
+    }
 
     private void saveDummyTips() {
         Tag fooTag = new Tag("foo");
         Tag barTag = new Tag("bar");
+        
         tagRepository.save(fooTag);
         tagRepository.save(barTag);
+        
         dummyTip1 = new Tip();
         dummyTip1.setAuthor("Seppo");
         dummyTip1.setTitle("Sepon tarinat");
@@ -213,6 +223,7 @@ public class TipStepdefs extends AbstractStepdefs {
         dummyTip1.setDescription("Toiseksi mahtavin tarina ikinä");
         dummyTip1.addTag(fooTag);
         tipRepository.save(dummyTip1);
+        
         dummyTip2 = new Tip();
         dummyTip2.setAuthor("Keijo");
         dummyTip2.setTitle("Keijon tarinat");
@@ -220,8 +231,25 @@ public class TipStepdefs extends AbstractStepdefs {
         dummyTip2.setDescription("Mahtavin tarina ikinä");
         dummyTip2.addTag(barTag);
         tipRepository.save(dummyTip2);
+        
+        dummyTip3 = new Tip();
+        dummyTip3.setAuthor("Seppo");
+        dummyTip3.setTitle("Toinen tarina");
+        dummyTip3.setUrl("https://seppourl.com");
+        dummyTip3.setDescription("Hieno toinen tarina");
+        dummyTip3.addTag(fooTag);
+        dummyTip3.addTag(barTag);
+        tipRepository.save(dummyTip3);
+        
+        dummyTip4 = new Tip();
+        dummyTip4.setAuthor("Foo");
+        dummyTip4.setTitle("Joku titteli");
+        dummyTip4.setUrl("https://foourl.com");
+        dummyTip4.setDescription("Foo Fighters");
+        dummyTip4.addTag(barTag);
+        tipRepository.save(dummyTip4);
     }
-
+    
     private void pageContains(String content) {
         assertTrue(driver.getPageSource().contains(content));
     }
