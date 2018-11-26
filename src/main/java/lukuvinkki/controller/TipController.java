@@ -26,7 +26,7 @@ public class TipController {
     @Autowired
     private TagRepository tagRepository;
 
-    @GetMapping
+    @GetMapping(value = "/")
     public String index() {
         return "index";
     }
