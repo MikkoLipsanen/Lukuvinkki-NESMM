@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -25,6 +26,11 @@ public class TipController {
     @Autowired
     private TagRepository tagRepository;
 
+    @GetMapping(value = "/")
+    public String index() {
+        return "index";
+    }
+    
     @RequestMapping(value="/addTip", method=RequestMethod.GET)
     public String tipForm(Model model){
         model.addAttribute("tip", new Tip());
@@ -40,7 +46,7 @@ public class TipController {
             tip.addTag(tag);
         }
         tipRepository.save(tip);
-        return "redirect:/";
+        return "redirect:/index";
    }
 
    @RequestMapping(value = "/tips", method = RequestMethod.GET)
