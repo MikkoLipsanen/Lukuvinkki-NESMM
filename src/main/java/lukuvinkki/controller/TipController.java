@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 public class TipController {
@@ -40,7 +42,7 @@ public class TipController {
             tip.addTag(tag);
         }
         tipRepository.save(tip);
-        return "tipForm";
+        return "redirect:index.html";
    }
 
    @RequestMapping(value = "/tips", method = RequestMethod.GET)
@@ -52,10 +54,13 @@ public class TipController {
    
    @RequestMapping(value = "/tips/{tipId}", method = RequestMethod.POST)
    public String statusSubmit(@PathVariable Long tipId, Model model){
-       Tip tip = tipRepository.findTipById(tipId);
+       Optional<Tip> optional = tipRepository.findById(tipId);
+       if(optional.isPresent()){
+       Tip tip = optional.get();
        tip.setStatus(true);
        tipRepository.save(tip);
-       return "tipList";
+       }
+       return "redirect:/tips";                  
    }
 
     private List<Tag> getOrCreateTag(List<String> rawTags) {

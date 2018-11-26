@@ -19,7 +19,7 @@ public class Tip {
     private String author;
     private String url;
     private String description;
-    private Boolean status;
+    private boolean status;
     
     
     @Transient
@@ -80,7 +80,7 @@ public class Tip {
         return status;
     }
 
-    public void setStatus(Boolean status){
+    public void setStatus(boolean status){
         this.status=status;
     }
     
@@ -132,4 +132,5 @@ public class Tip {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
 }

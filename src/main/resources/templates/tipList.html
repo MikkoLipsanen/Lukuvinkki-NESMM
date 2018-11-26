@@ -28,9 +28,11 @@
                         <span class="tag" th:each="tag : ${tip.getTags()}" th:text="${tag.getName()}"></span>
                     </td>
                     <td class="status">
-                        <span th:if="${tip.getStatus() = false}">
-                            <button type="submit" name="markAsRead" th:href="@{/tips/{tipId}(tipId=${tip.getId()})}">Mark as Read</button></span>
-                        <span th:unless="${tip.getStatus() = true}">Read</span>
+                        <span th:if="${tip.getStatus() == false}">
+                        <form th:action="@{/tips/{tipId}(tipId=${tip.getId()})}" th:method="POST">
+                            <button type="submit" name="markAsRead">Mark as Read</button></span>
+                        </form>
+                        <span th:unless="${tip.getStatus() == false}">Read</span>                      
                     </td>
                 </tr>
             </tbody>
