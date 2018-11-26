@@ -52,6 +52,7 @@ public class TipStepdefs extends AbstractStepdefs {
         WebElement webElement = driver.findElement(By.linkText("lukuvinkki"));
         webElement.click();
     }
+        
     
     @When("^title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\" are given$")
     public void title_author_url_and_description_are_given(String title, String author, String url, String desc) throws Throwable {
@@ -61,6 +62,12 @@ public class TipStepdefs extends AbstractStepdefs {
     @When("^title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\", description \"([^\"]*)\" and tags \"([^\"]*)\" are given$")
     public void title_author_url_description_and_tags_are_given(String title, String author, String url, String desc, String tags) throws Throwable {
         addTip(title, author, url, desc, tags);
+    }
+    
+    @When("^command Mark as Read is selected$")
+    public void command_mark_as_read_is_selected()throws Throwable {
+        WebElement webElement = driver.findElement(By.name("markAsRead"));
+        webElement.click();
     }
 
     @Then("^page contains a list of tips sorted by creation time$")
@@ -98,6 +105,11 @@ public class TipStepdefs extends AbstractStepdefs {
     public void only_following_tags_are_created(DataTable dt) throws Throwable {
         List<String> tags = dt.asList(String.class);
         assertCreatedTags(tags);
+    }
+    
+    @Then("^page shows tip marked as read$")
+    public void page_shows_tip_as_read()throws Throwable {
+        assertTrue(driver.getPageSource().contains("Read"));
     }
 
     @After
