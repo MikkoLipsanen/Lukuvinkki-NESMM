@@ -11,12 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import java.util.Optional;
 
 @Controller
 public class TipController {
@@ -30,7 +32,7 @@ public class TipController {
     public String index() {
         return "index";
     }
-    
+
     @RequestMapping(value="/addTip", method=RequestMethod.GET)
     public String tipForm(Model model){
         model.addAttribute("tip", new Tip());
@@ -55,16 +57,27 @@ public class TipController {
         model.addAttribute("tips", tips);
         return "tipList";
    }
-   
+
+   @RequestMapping(value = "/tips/{tipId}", method = RequestMethod.POST)
+   public String statusSubmit(@PathVariable Long tipId, Model model){
+       Optional<Tip> optional = tipRepository.findById(tipId);
+       if(optional.isPresent()){
+       Tip tip = optional.get();
+       tip.setStatus(true);
+       tipRepository.save(tip);
+       }
+       return "redirect:/tips";
+   }
+
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String searchTips(@RequestParam("keyword") String keyword, Model model) {
-        
+
         if (keyword.isEmpty()) {
             List<Tip> allTips = tipRepository.findAllByOrderByCreatedDesc();
             model.addAttribute("tips", allTips);
             return "tipList";
         }
-        
+
         // PRIMARY SEARCH BY TAGS OF TIPS
         List<Tag> tags = tagRepository.findByNameIgnoreCaseContaining(keyword);
         List<Tip> primaryTips = new ArrayList<>();
@@ -72,14 +85,14 @@ public class TipController {
             tag.getTips().forEach(tip -> primaryTips.add(tip));
         }
         Collections.sort(primaryTips, (tip1, tip2) -> tip2.getCreated().compareTo(tip1.getCreated()));
-        
+
         // SECONDARY SEARCH BY TITLES AND AUTHORS
         List<Tip> secondaryTips = tipRepository.findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContainingOrderByCreatedDesc(keyword, keyword);
-        
+
         // MERGE TWO LISTS
         secondaryTips.removeAll(primaryTips);
         primaryTips.addAll(secondaryTips);
-        
+
         model.addAttribute("tips", primaryTips);
         return "tipList";
     }

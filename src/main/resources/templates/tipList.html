@@ -26,7 +26,7 @@
                         <td>WWW</td>
                         <td>Sisältö</td>
                         <td>Tagit</td>
-                        <td>Tehty</td>
+                        <td>Status</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,7 +38,14 @@
                         <td class="tags">
                             <span class="tag" th:each="tag : ${tip.getTags()}" th:text="${tag.getName()}"></span>
                         </td>
-                        <td class="created" th:text="${tip.getCreated()}"></td>
+                        <td class="status">
+                            <span th:if="${tip.getStatus() == false}">
+                                <form th:action="@{/tips/{tipId}(tipId=${tip.getId()})}" th:method="POST">
+                                    <button type="submit" name="markAsRead">Mark as Read</button>
+                                </form>
+                            </span>
+                            <span th:unless="${tip.getStatus() == false}">Read</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
