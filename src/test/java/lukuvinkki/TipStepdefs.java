@@ -1,11 +1,9 @@
 package lukuvinkki;
 
 import cucumber.api.DataTable;
-import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import java.util.ArrayList;
 import lukuvinkki.domain.Tag;
 import lukuvinkki.domain.Tip;
 import lukuvinkki.repository.TagRepository;
@@ -13,9 +11,10 @@ import lukuvinkki.repository.TipRepository;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -23,8 +22,8 @@ import static org.junit.Assert.assertTrue;
 
 public class TipStepdefs extends AbstractStepdefs {
 
-    private WebDriver driver = new HtmlUnitDriver(true);
-    private String url = "http://localhost:" + 8080 + "/";
+    @Autowired
+    private WebDriver driver;
     private Tip dummyTip1, dummyTip2, dummyTip3, dummyTip4;
     @Resource
     private TipRepository tipRepository;
@@ -38,42 +37,11 @@ public class TipStepdefs extends AbstractStepdefs {
         saveDummyTips();
     }
 
-    @Given("^command view tips is selected$")
-    public void command_view_tips_is_selected() throws Throwable {
-        driver.get(url);
-        //TODO: Add a proper id to the link
-        WebElement webElement = driver.findElement(By.linkText("täältä"));
-        webElement.click();
-    }
-
-    @Given("^command new tip is selected$")
-    public void command_new_tip_is_selected() throws Throwable {
-        driver.get(url);
-        //TODO: Add a proper id to the link
-        WebElement webElement = driver.findElement(By.linkText("lukuvinkki"));
-        webElement.click();
-    }
-
-    @Given("^command search is selected$")
-    public void command_search_is_selected() throws Throwable {
-        driver.get(url);
-        WebElement webElement = driver.findElement(By.linkText("täältä"));
-        webElement.click();
-    }
-
     @Given("^tip is created with tag \"([^\"]*)\"$")
     public void tip_is_created_with_tag(String tag) throws Throwable {
-        driver.get(url);
         WebElement webElement = driver.findElement(By.linkText("lukuvinkki"));
         webElement.click();
         addTip("plaah", "plaah", "plaah", "plaah", tag);
-    }
-
-    @Given("^command submit tip is selected$")
-    public void command_submit_tip_is_selected() throws Throwable {
-        driver.get(url + "addTip");
-        WebElement webElement = driver.findElement(By.name("submit"));
-        webElement.click();
     }
 
     @When("^title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\" are given$")
@@ -84,22 +52,6 @@ public class TipStepdefs extends AbstractStepdefs {
     @When("^title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\", description \"([^\"]*)\" and tags \"([^\"]*)\" are given$")
     public void title_author_url_description_and_tags_are_given(String title, String author, String url, String desc, String tags) throws Throwable {
         addTip(title, author, url, desc, tags);
-    }
-
-    @When("^command Mark as Read is selected$")
-    public void command_mark_as_read_is_selected()throws Throwable {
-        WebElement webElement = driver.findElement(By.name("markAsRead"));
-        webElement.click();
-    }
-
-    @When("^search is done with keyword \"([^\"]*)\"$")
-    public void command_search_is_selected_with_keyword(String keyword) throws Throwable {
-        searchTips(keyword);
-    }
-
-    @When("^search is done with mismatching keyword \"([^\"]*)\"$")
-    public void command_search_is_selected_with_mismatching_keyword(String keyword) throws Throwable {
-        searchTips(keyword);
     }
 
     @Then("^page contains a list of tips with tag matches shown first")
@@ -156,7 +108,7 @@ public class TipStepdefs extends AbstractStepdefs {
 
     @Then("^list contains tip with tag \"([^\"]*)\"$")
     public void list_contains_tip_with_tag(String tag) throws Throwable {
-        List<String> tags = new ArrayList();
+        List<String> tags = new ArrayList<>();
         tags.add(tag);
         List<WebElement> rows = driver.findElements(By.cssSelector(".table tbody tr"));
         assertTagsInTipTableRow(rows.get(0), tags);
@@ -170,14 +122,6 @@ public class TipStepdefs extends AbstractStepdefs {
     @Then("^list doesnt contain tip with tag \"([^\"]*)\"$")
     public void list_doesnt_contain_tip_with_tag(String tag) throws Throwable {
         assertTrue(!driver.getPageSource().contains(tag));
-    }
-
-    @After
-    public void tearDown() {
-        // Don't change the order of these delete statements
-        tipRepository.deleteAll();
-        tagRepository.deleteAll();
-        driver.quit();
     }
 
     private void addTip(String title, String author, String url, String desc, String tags) {
