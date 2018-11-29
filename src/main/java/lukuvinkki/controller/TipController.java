@@ -69,7 +69,7 @@ public class TipController {
        return "redirect:/tips";
    }
 
-    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String searchTips(@RequestParam("keyword") String keyword, Model model) {
 
         if (keyword.isEmpty()) {
