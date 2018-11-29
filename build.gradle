@@ -19,7 +19,7 @@ mainClassName = 'lukuvinkki.Application'
 
 bootJar {
     baseName = 'lukuvinkki-applikaatio'
-    version =  '0.0.1'
+    version =  ''
 }
 def profiles = 'dev'
 bootRun {
@@ -44,6 +44,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-devtools")
     compile("com.h2database:h2")
+    compile("org.postgresql:postgresql")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
 	// compile group: 'org.springframework', name: 'spring-web', version: '5.1.2.RELEASE'
     testCompile("org.springframework:spring-test")
