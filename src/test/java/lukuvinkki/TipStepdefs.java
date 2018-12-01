@@ -57,24 +57,24 @@ public class TipStepdefs extends AbstractStepdefs {
     @Then("^page contains a list of tips with tag matches shown first")
     public void page_contains_a_list_of_tips_with_tag_matches_shown_first() throws Throwable {
         List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
-        assertTipTableElement(tipElements.get(0), dummyTip3.getTitle(), dummyTip3.getAuthor(), dummyTip3.getUrl(), dummyTip3.getDescription()); // tag match, created later
-        assertTipTableElement(tipElements.get(1), dummyTip1.getTitle(), dummyTip1.getAuthor(), dummyTip1.getUrl(), dummyTip1.getDescription()); // tag match
-        assertTipTableElement(tipElements.get(2), dummyTip4.getTitle(), dummyTip4.getAuthor(), dummyTip4.getUrl(), dummyTip4.getDescription()); // title match
+        assertTipTableElement(tipElements.get(0), dummyTip3.getTitle(), dummyTip3.getAuthor(), dummyTip3.getDescription()); // tag match, created later
+        assertTipTableElement(tipElements.get(1), dummyTip1.getTitle(), dummyTip1.getAuthor(), dummyTip1.getDescription()); // tag match
+        assertTipTableElement(tipElements.get(2), dummyTip4.getTitle(), dummyTip4.getAuthor(), dummyTip4.getDescription()); // title match
     }
 
     @Then("^page contains a list of tips sorted by creation time$")
     public void page_contains_a_list_of_tips_sorted_by_creation_time() throws Throwable {
         List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
-        assertTipTableElement(tipElements.get(0), dummyTip4.getTitle(), dummyTip4.getAuthor(), dummyTip4.getUrl(), dummyTip4.getDescription());
-        assertTipTableElement(tipElements.get(1), dummyTip3.getTitle(), dummyTip3.getAuthor(), dummyTip3.getUrl(), dummyTip3.getDescription());
-        assertTipTableElement(tipElements.get(2), dummyTip2.getTitle(), dummyTip2.getAuthor(), dummyTip2.getUrl(), dummyTip2.getDescription());
-        assertTipTableElement(tipElements.get(3), dummyTip1.getTitle(), dummyTip1.getAuthor(), dummyTip1.getUrl(), dummyTip1.getDescription());
+        assertTipTableElement(tipElements.get(0), dummyTip4.getTitle(), dummyTip4.getAuthor(), dummyTip4.getDescription());
+        assertTipTableElement(tipElements.get(1), dummyTip3.getTitle(), dummyTip3.getAuthor(), dummyTip3.getDescription());
+        assertTipTableElement(tipElements.get(2), dummyTip2.getTitle(), dummyTip2.getAuthor(), dummyTip2.getDescription());
+        assertTipTableElement(tipElements.get(3), dummyTip1.getTitle(), dummyTip1.getAuthor(), dummyTip1.getDescription());
     }
 
-    @Then("^a new tip is created with title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\"$")
-    public void a_new_tip_is_created_with_title_author_url_and_description(String title, String author, String url, String desc) throws Throwable {
+    @Then("^a new tip is created with title \"([^\"]*)\", author \"([^\"]*)\" and description \"([^\"]*)\"$")
+    public void a_new_tip_is_created_with_title_author_and_description(String title, String author, String desc) throws Throwable {
         List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
-        assertTipTableElement(tipElements.get(0), title, author, url, desc);
+        assertTipTableElement(tipElements.get(0), title, author, desc);
     }
 
     @Then("^a proper form with title, author, url and description is shown$")
@@ -146,14 +146,12 @@ public class TipStepdefs extends AbstractStepdefs {
         }
     }
 
-    private void assertTipTableElement(WebElement element, String title, String author, String url, String desc) {
+    private void assertTipTableElement(WebElement element, String title, String author, String desc) {
         WebElement titleElement = element.findElement(By.className("title"));
         WebElement authorElement = element.findElement(By.className("author"));
-        WebElement urlElement = element.findElement(By.className("url"));
         WebElement descriptionElement = element.findElement(By.className("description"));
         assertEquals(titleElement.getText(), title);
         assertEquals(authorElement.getText(), author);
-        assertEquals(urlElement.getText(), url);
         assertEquals(descriptionElement.getText(), desc);
     }
 
