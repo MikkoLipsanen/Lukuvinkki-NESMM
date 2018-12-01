@@ -41,7 +41,7 @@ public class NavigationStepdefs extends AbstractStepdefs {
     }
 
     @When("^title \"([^\"]*)\" is clicked$")
-	public void title_is_clicked(String title) throws Throwable {
+    public void title_is_clicked(String title) throws Throwable {
         WebElement webElement = driver.findElement(By.linkText(title));
         webElement.click();
     }
