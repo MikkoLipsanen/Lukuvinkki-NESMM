@@ -57,13 +57,13 @@ public class TipController {
         Optional<Tip> optional = tipRepository.findById(tipId);
         if (optional.isPresent()) {
             Tip tip = optional.get();
-            String tags = new String("");
+            String tags = "";
             for (Tag tag : tip.getTags()) {
                 tags = tags + tag.getName() + ";";
             }
             tip.setRawTags(tags);
+            model.addAttribute("tip", optional);
         }
-        model.addAttribute("tip", optional);
         return "tipEdit";
     }
 
@@ -76,17 +76,15 @@ public class TipController {
             editedTip.setAuthor(tip.getAuthor());
             editedTip.setUrl(tip.getUrl());
             editedTip.setDescription(tip.getDescription());
-
             removeAllTagsOfTip(editedTip);
             TagParser parser = new TagParser(tip.getRawTags());
             List<Tag> tags = getOrCreateTag(parser.parse());
             for (Tag tag : tags) {
                 editedTip.addTag(tag);
             }
-
             tipRepository.save(editedTip);
         }
-        return "redirect:/tips/" + tip.getId();
+        return "redirect:/tips/" + tipId;
     }
 
     @RequestMapping(value = "/tips", method = RequestMethod.GET)
