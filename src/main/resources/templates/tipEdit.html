@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:include="fragment/base :: head (title='Muokkaa lukuvinkkiä')">
+        <title>title</title>
+    </head>
+    <body>
+        <br/>
+        <h2>Muokkaa lukuvinkkiä</h2>
+        <br/>
+        <form action="#" th:action="@{/tips/{tipId}/editTip (tipId=${tipId})}" th:object="${tip}" method="post">
+            <table>
+                <tr>
+                    <td>Nimi:</td>
+                    <td><input type="text" th:field="*{title}" /></td>
+                </tr>
+                <tr>
+                    <td>Tekijä:</td>
+                    <td><input type="text" th:field="*{author}" /></td>
+                </tr>
+                <tr>
+                    <td>Url:</td>
+                    <td><input type="text" th:field="*{url}" /></td>
+                </tr>
+                <tr>
+                    <td>Kuvaus:</td>
+                    <td><input type="text" th:field="*{description}" /></td>
+                </tr>
+                <tr>
+                    <td>Tagit:</td>
+                    <td><input type="text" th:field="*{rawTags}"  /></td>
+                </tr>
+                <tr>
+                    <td><button type="submit" name="edit" >Tallenna muutokset</button></td>
+                </tr>
+            </table>
+        </form>
+
+
+        <br></br>
+        <a href="/tips">Palaa listaussivulle</a>
+    </body>
+</html>

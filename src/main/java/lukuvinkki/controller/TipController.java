@@ -19,9 +19,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class TipController {
+
     @Autowired
     private TipRepository tipRepository;
 
@@ -33,41 +35,77 @@ public class TipController {
         return "index";
     }
 
-    @RequestMapping(value="/addTip", method=RequestMethod.GET)
-    public String tipForm(Model model){
+    @RequestMapping(value = "/addTip", method = RequestMethod.GET)
+    public String tipForm(Model model) {
         model.addAttribute("tip", new Tip());
         return "tipForm";
     }
-    
+
     @RequestMapping(value = "/addTip", method = RequestMethod.POST)
-    public String tipSubmit(@ModelAttribute Tip tip)
-    {
+    public String tipSubmit(@ModelAttribute Tip tip) {
         TagParser parser = new TagParser(tip.getRawTags());
         List<Tag> tags = getOrCreateTag(parser.parse());
-        for(Tag tag : tags) {
+        for (Tag tag : tags) {
             tip.addTag(tag);
         }
         tipRepository.save(tip);
         return "redirect:/";
-   }
+    }
 
-   @RequestMapping(value = "/tips", method = RequestMethod.GET)
-   public String viewTips(Model model) {
+    @RequestMapping(value = "/tips/{tipId}/editTip", method = RequestMethod.GET)
+    public String tipEditForm(@PathVariable Long tipId, Model model) {
+        Optional<Tip> optional = tipRepository.findById(tipId);
+        if (optional.isPresent()) {
+            Tip tip = optional.get();
+            String tags = new String("");
+            for (Tag tag : tip.getTags()) {
+                tags = tags + tag.getName() + ";";
+            }
+            tip.setRawTags(tags);
+        }
+        model.addAttribute("tip", optional);
+        return "tipEdit";
+    }
+
+    @RequestMapping(value = "/tips/{tipId}/editTip", method = RequestMethod.POST)
+    public String editSubmit(@PathVariable Long tipId, @ModelAttribute Tip tip) {
+        Optional<Tip> optional = tipRepository.findById(tipId);
+        if (optional.isPresent()) {
+            Tip editedTip = optional.get();
+            editedTip.setTitle(tip.getTitle());
+            editedTip.setAuthor(tip.getAuthor());
+            editedTip.setUrl(tip.getUrl());
+            editedTip.setDescription(tip.getDescription());
+
+            removeAllTagsOfTip(editedTip);
+            TagParser parser = new TagParser(tip.getRawTags());
+            List<Tag> tags = getOrCreateTag(parser.parse());
+            for (Tag tag : tags) {
+                editedTip.addTag(tag);
+            }
+
+            tipRepository.save(editedTip);
+        }
+        return "redirect:/tips/{tipId}";
+    }
+
+    @RequestMapping(value = "/tips", method = RequestMethod.GET)
+    public String viewTips(Model model) {
         List<Tip> tips = tipRepository.findAllByOrderByCreatedDesc();
         model.addAttribute("tips", tips);
         return "tipList";
-   }
+    }
 
-   @RequestMapping(value = "/tips/{tipId}", method = RequestMethod.POST)
-   public String statusSubmit(@PathVariable Long tipId, Model model){
-       Optional<Tip> optional = tipRepository.findById(tipId);
-       if(optional.isPresent()){
-       Tip tip = optional.get();
-       tip.setStatus(true);
-       tipRepository.save(tip);
-       }
-       return "redirect:/tips";
-   }
+    @RequestMapping(value = "/tips/{tipId}", method = RequestMethod.POST)
+    public String statusSubmit(@PathVariable Long tipId, Model model) {
+        Optional<Tip> optional = tipRepository.findById(tipId);
+        if (optional.isPresent()) {
+            Tip tip = optional.get();
+            tip.setStatus(true);
+            tipRepository.save(tip);
+        }
+        return "redirect:/tips";
+    }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String searchTips(@RequestParam("keyword") String keyword, Model model) {
@@ -108,5 +146,13 @@ public class TipController {
             tags.add(tag);
         }
         return tags;
+    }
+
+    private Set<Tag> removeAllTagsOfTip(Tip tip) {
+        Set<Tag> tagsOfTip = tip.getTags();
+        for (Tag tag : tagsOfTip) {
+            tip.removeTag(tag);
+        }
+        return tagsOfTip;
     }
 }
