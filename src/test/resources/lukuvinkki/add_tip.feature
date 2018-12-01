@@ -14,7 +14,7 @@ Feature: User can create a new tip
     Given command new tip is selected
     When  title "testtitle", author "testauthor", url "testurl" and description "testdesc" are given
     And   command view tips is selected
-    Then  a new tip is created with title "testtitle", author "testauthor", url "testurl" and description "testdesc"
+    Then  a new tip is created with title "testtitle", author "testauthor" and description "testdesc"
 
   Scenario: user can create a new tip with tags
     Given command new tip is selected
