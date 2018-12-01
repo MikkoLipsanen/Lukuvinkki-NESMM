@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <head th:include="fragment/base :: head (title='Lukuvinkin tiedot')">
+    </head>
+    <body>
+        <h2>Lukuvinkin tiedot</h2>
+        <table width="80%" border="1">
+            <thead>
+                <tr>
+                    <td>Otsikko:</td>
+                    <td th:text="${tip.getTitle()}">Title</td>
+                </tr>
+                <tr>
+                    <td>Tekija:</td>
+                    <td th:text="${tip.getAuthor()}">Author</td>
+                </tr>
+                <tr>
+                    <td>Sisältö:</td>
+                    <td th:text="${tip.getDescription()}">Description</td>
+                </tr>
+                <tr>
+                    <td>Urli:</td>
+                    <td> <a th:href="${tip.getUrl()}" th:text="${tip.getUrl()}">Url</td>
+                </tr>
+                <tr>
+                    <td>Tagit:</td>
+                     <td class="tags">
+                        <span class="tag" th:each="tag : ${tip.getTags()}" th:text="${tag.getName()}"></span>
+                    </td>
+                </tr>
+                <td>Luettu:</td>
+                <td class="status">
+                    <span th:if="${tip.getStatus() == false}">
+                        <form th:action="@{/tips/{tipId}(tipId=${tip.getId()})}" th:method="POST">
+                            <button type="submit" name="markAsRead">Mark as Read</button>
+                        </form>
+                    </span>
+                    <span th:unless="${tip.getStatus() == false}">Read</span>
+                </td>
+                <tr>
+                    <td>Lisätty:</td>
+                    <td th:text="${tip.getCreated()}">Date</td>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <br><br>
+        <p>Katso lukuvinkit <a href="/tips">täältä</a></p>
+        <p>Lisää uusi <a href="/addTip">lukuvinkki</a></p>
+    </body>
+</html>

@@ -32,6 +32,13 @@ public class TipStepdefs extends AbstractStepdefs {
     private TagRepository tagRepository;
 
 
+    @Given("^tip with title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\" is created$")
+    public void tip_with_given_fields_is_created(String title, String author, String url, String desc) throws Throwable {
+        WebElement webElement = driver.findElement(By.linkText("lukuvinkki"));
+        webElement.click();
+        addTip(title, author, url, desc, "");
+    }
+    
     @Given("^there are some tips created$")
     public void there_are_some_tips_created() throws Throwable {
         saveDummyTips();
@@ -52,6 +59,14 @@ public class TipStepdefs extends AbstractStepdefs {
     @When("^title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\", description \"([^\"]*)\" and tags \"([^\"]*)\" are given$")
     public void title_author_url_description_and_tags_are_given(String title, String author, String url, String desc, String tags) throws Throwable {
         addTip(title, author, url, desc, tags);
+    }
+    
+    @Then("^page contains title \"([^\"]*)\", author \"([^\"]*)\", description \"([^\"]*)\" and url \"([^\"]*)\"$")
+        public void view_tip_page_showing_tip_information(String title, String author, String description, String url) {
+        pageContains(title);
+        pageContains(author);
+        pageContains(description);
+        pageContains(url);
     }
 
     @Then("^page contains a list of tips with tag matches shown first")

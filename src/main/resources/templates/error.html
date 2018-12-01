@@ -2,9 +2,11 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-            <title>Title</title>
+            <head th:include="fragment/base :: head (title='Lisää lukuvinkki')">
+            <title>I have some terrible news..</title>
     </head>
     <body>
-        <h1>Server error: <span th:text="${error}"></span> </h1>
+        <h1 class="error">Kumpula, we may have a problem here</h1>
+        <h2>Server error: <span th:text="${error}"></span> </h2>
     </body>
 </html>

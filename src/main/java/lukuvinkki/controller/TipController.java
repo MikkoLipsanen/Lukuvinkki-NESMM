@@ -51,6 +51,15 @@ public class TipController {
         return "redirect:/";
    }
 
+    @RequestMapping(value = "/tips/{tipId}", method = RequestMethod.GET)
+    public String viewTip(@PathVariable Long tipId, Model model) {
+        Optional<Tip> optional = tipRepository.findById(tipId);
+        if(!optional.isPresent()) return "error";
+        Tip tip = optional.get();
+        model.addAttribute("tip", tip);
+        return "viewTip";
+   }
+    
    @RequestMapping(value = "/tips", method = RequestMethod.GET)
    public String viewTips(Model model) {
         List<Tip> tips = tipRepository.findAllByOrderByCreatedDesc();
