@@ -9,7 +9,7 @@ INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1006, f
 INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1007, false, 'Premature optimization is the root of all evil.', 'Matti', 'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.', 'https://fullstack-hy.github.io/',TO_DATE('12/10/2017', 'DD/MM/YYYY'));
 INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1008, false, 'Model-view-controller', 'Wikipedia','Diagram of interactions within the MVC pattern.
 Model–view–controller is an architectural pattern commonly used for developing user interfaces that divides an application into three interconnected parts.', 'https://en.wikipedia.org/wiki/Model-view-controller',TO_DATE('17/12/2015', 'DD/MM/YYYY'));
-INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1009, false, 'asddasdas', 'asddasdas', 'asddas', 'http://www.google.fi',TO_DATE('17/12/2016', 'DD/MM/YYYY'));
+INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1009, false, 'You never up give', 'Riku', 'I have some serious security to do', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',TO_DATE('01/12/2018', 'DD/MM/YYYY'));
 
 INSERT INTO TAG(id,name) VALUES (1001, 'Wepa');
 INSERT INTO TAG(id,name) VALUES (1002, 'Fullstack');
