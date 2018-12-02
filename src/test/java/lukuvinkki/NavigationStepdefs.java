@@ -12,7 +12,6 @@ public class NavigationStepdefs extends AbstractStepdefs {
     @Autowired
     private WebDriver driver;
 
-
     @Given("^command view tips is selected$")
     public void command_view_tips_is_selected() throws Throwable {
         //TODO: Add a proper id to the link
@@ -46,8 +45,14 @@ public class NavigationStepdefs extends AbstractStepdefs {
         webElement.click();
     }
 
+    @When("^url \"([^\"]*)\" can be clicked$")
+    public void url_is_clicked(String url) throws Throwable {
+        WebElement webElement = driver.findElement(By.linkText(url));
+        webElement.click();
+    }
+
     @When("^command Mark as Read is selected$")
-    public void command_mark_as_read_is_selected()throws Throwable {
+    public void command_mark_as_read_is_selected() throws Throwable {
         WebElement webElement = driver.findElement(By.name("markAsRead"));
         webElement.click();
     }
