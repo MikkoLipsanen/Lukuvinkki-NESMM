@@ -1,5 +1,11 @@
 package lukuvinkki.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import lukuvinkki.domain.Tag;
 import lukuvinkki.domain.Tip;
 import lukuvinkki.repository.TagRepository;
@@ -16,9 +22,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.springframework.util.ResourceUtils;
 
 @Controller
 public class TipController {
@@ -40,10 +51,10 @@ public class TipController {
     }
     
     @RequestMapping(value = "/addTip", method = RequestMethod.POST)
-    public String tipSubmit(@ModelAttribute Tip tip)
-    {
+    public String tipSubmit(@ModelAttribute Tip tip) {
+        addTagsByUrls(tip);
         TagParser parser = new TagParser(tip.getRawTags());
-        List<Tag> tags = getOrCreateTag(parser.parse());
+        List<Tag> tags = getOrCreateTags(parser.parse());
         for(Tag tag : tags) {
             tip.addTag(tag);
         }
@@ -105,17 +116,57 @@ public class TipController {
         model.addAttribute("tips", primaryTips);
         return "tipList";
     }
-
-    private List<Tag> getOrCreateTag(List<String> rawTags) {
+    
+    private void addTagsByUrls(Tip tip) {
+       List<String> data = getRawDataFromResourceFile("data/tags_by_urls.txt");
+       parseUrlsAndTagsFromDataList(tip, data);
+    }
+    
+    private List<String> getRawDataFromResourceFile(String filePath) {
+        List<String> lines = new ArrayList<>();
+        try {
+            File file = ResourceUtils.getFile("classpath:" + filePath);
+            Charset charset = Charset.forName("UTF-8");
+            lines = Files.readAllLines(file.toPath(), charset);
+        } catch (IOException e) {
+            e.getMessage();
+        }
+        return lines;
+    }
+    
+    private void parseUrlsAndTagsFromDataList(Tip tip, List<String> lines) {
+        for (String line : lines) {
+            String[] urlsAndTags = line.split(" => ");
+            String[] urls = urlsAndTags[0].split(" ");
+            String[] tags = urlsAndTags[1].split(";");
+            for (String url : urls) {
+                if (tipHasUrl(tip, url)) {
+                    for (String tag : tags) {
+                        tip.addTag(getOrCreateTag(tag));
+                    }
+                }
+            }
+        }
+    }
+    
+    private boolean tipHasUrl(Tip tip, String url) {
+        return tip.getUrl().contains(url);
+    }
+    
+    private List<Tag> getOrCreateTags(List<String> rawTags) {
         List<Tag> tags = new ArrayList<>();
         for (String rawTag : rawTags) {
-            Tag tag = tagRepository.findTagByName(rawTag);
-            if (tag == null) {
-                tag = new Tag(rawTag);
-                tagRepository.save(tag);
-            }
-            tags.add(tag);
+            tags.add(getOrCreateTag(rawTag));
         }
         return tags;
+    }
+
+    private Tag getOrCreateTag(String rawTag) {
+        Tag tag = tagRepository.findTagByName(rawTag);
+        if (tag == null) {
+            tag = new Tag(rawTag);
+            tagRepository.save(tag);
+        }
+        return tag;
     }
 }
