@@ -43,6 +43,14 @@
                     <td>Lisätty:</td>
                     <td th:text="${tip.getCreated()}">Date</td>
                 </tr>
+                <tr>
+                    <td>Muokkaa vinkkiä:</td>
+                    <td class="edit">
+                            <form th:action="@{/tips/{tipId}/editTip(tipId=${tip.getId()})}" th:method="GET">
+                                <button type="submit" name="edit">Edit</button>
+                            </form>
+                    </td>
+                </tr>
             </thead>
             <tbody>
             </tbody>
