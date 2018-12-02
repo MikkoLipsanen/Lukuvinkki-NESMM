@@ -87,8 +87,17 @@ public class TipController {
         return "redirect:/tips/" + tipId;
     }
 
-    @RequestMapping(value = "/tips", method = RequestMethod.GET)
-    public String viewTips(Model model) {
+    @RequestMapping(value = "/tips/{tipId}", method = RequestMethod.GET)
+    public String viewTip(@PathVariable Long tipId, Model model) {
+        Optional<Tip> optional = tipRepository.findById(tipId);
+        if(!optional.isPresent()) return "error";
+        Tip tip = optional.get();
+        model.addAttribute("tip", tip);
+        return "viewTip";
+   }
+    
+   @RequestMapping(value = "/tips", method = RequestMethod.GET)
+   public String viewTips(Model model) {
         List<Tip> tips = tipRepository.findAllByOrderByCreatedDesc();
         model.addAttribute("tips", tips);
         return "tipList";
@@ -105,7 +114,7 @@ public class TipController {
         return "redirect:/tips";
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String searchTips(@RequestParam("keyword") String keyword, Model model) {
 
         if (keyword.isEmpty()) {
