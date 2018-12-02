@@ -56,6 +56,12 @@ public class NavigationStepdefs extends AbstractStepdefs {
         WebElement webElement = driver.findElement(By.name("markAsRead"));
         webElement.click();
     }
+    
+    @When("^command edit tip is selected$")   
+       public void command_edit_tip_is_selected()throws Throwable {
+       WebElement webElement = driver.findElement(By.name("edit"));
+       webElement.click();
+    }
 
     @When("^search is done with keyword \"([^\"]*)\"$")
     public void command_search_is_selected_with_keyword(String keyword) throws Throwable {
