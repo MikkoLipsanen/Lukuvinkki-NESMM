@@ -1,11 +1,9 @@
 package lukuvinkki.controller;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import lukuvinkki.domain.Tag;
 import lukuvinkki.domain.Tip;
 import lukuvinkki.repository.TagRepository;
@@ -22,13 +20,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.util.ResourceUtils;
 
 @Controller
