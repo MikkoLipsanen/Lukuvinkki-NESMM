@@ -115,42 +115,7 @@ public class TipController {
         for (String tag : tags) {
             tip.addTag(getOrCreateTag(tag));
         }
-        
-        
-//        List<String> data = getRawDataFromResourceFile("data/tags_by_urls.txt");
-//        parseUrlsAndTagsFromDataList(tip, data);
     }
-    
-//    private List<String> getRawDataFromResourceFile(String filePath) {
-//        List<String> lines = new ArrayList<>();
-//        try {
-//            File file = ResourceUtils.getFile("classpath:" + filePath);
-//            Charset charset = Charset.forName("UTF-8");
-//            lines = Files.readAllLines(file.toPath(), charset);
-//        } catch (IOException e) {
-//            e.getMessage();
-//        }
-//        return lines;
-//    }
-//    
-//    private void parseUrlsAndTagsFromDataList(Tip tip, List<String> lines) {
-//        for (String line : lines) {
-//            String[] urlsAndTags = line.split(" => ");
-//            String[] urls = urlsAndTags[0].split(" ");
-//            String[] tags = urlsAndTags[1].split(";");
-//            for (String url : urls) {
-//                if (tipHasUrl(tip, url)) {
-//                    for (String tag : tags) {
-//                        tip.addTag(getOrCreateTag(tag));
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    
-//    private boolean tipHasUrl(Tip tip, String url) {
-//        return tip.getUrl().contains(url);
-//    }
     
     private List<Tag> getOrCreateTags(List<String> rawTags) {
         List<Tag> tags = new ArrayList<>();
