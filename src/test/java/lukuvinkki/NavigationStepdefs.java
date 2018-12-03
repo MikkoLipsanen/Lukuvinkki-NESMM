@@ -1,6 +1,7 @@
 package lukuvinkki;
 
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -49,6 +50,7 @@ public class NavigationStepdefs extends AbstractStepdefs {
     public void url_is_clicked(String url) throws Throwable {
         WebElement webElement = driver.findElement(By.linkText(url));
         webElement.click();
+        driver.getCurrentUrl();
     }
 
     @When("^command Mark as Read is selected$")
@@ -65,6 +67,11 @@ public class NavigationStepdefs extends AbstractStepdefs {
     @When("^search is done with mismatching keyword \"([^\"]*)\"$")
     public void command_search_is_selected_with_mismatching_keyword(String keyword) throws Throwable {
         searchTips(keyword);
+    }
+        
+    @Then("^the current url address is \"([^\"]*)\"$")
+    public void the_current_url_address_is_correct(String url) throws Throwable {
+        driver.getCurrentUrl();
     }
 
     private void searchTips(String keyword) {
