@@ -7,7 +7,6 @@ Feature: User can create a new tip
   Scenario: after creating a tip the main page is shown 
     Given command new tip is selected
     When  title "testtitle", author "testauthor", url "testurl" and description "testdesc" are given
-    And command submit tip is selected
     Then  the main page is shown
 
   Scenario: user can create a new tip with some values
@@ -32,6 +31,14 @@ Feature: User can create a new tip
       |foo|bar|baz|
     And   only following tags are created:
       |foo|bar|baz|
+
+  Scenario: user cannot add two tags of the same name to a tip
+    Given command new tip is selected
+    When  title "testtitle", author "testauthor", url "testurl", description "testdesc" and tags "foo; bar; foo; bar" are given
+    And   command view tips is selected
+    Then  the new tip has only two tags
+
+
 #Scenario: user can not create a new tip without any values
 #    Given command new tip is selected
 #    When  title "", author "", url "" and description "" are given

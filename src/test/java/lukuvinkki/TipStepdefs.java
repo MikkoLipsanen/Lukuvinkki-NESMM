@@ -138,6 +138,13 @@ public class TipStepdefs extends AbstractStepdefs {
     public void list_doesnt_contain_tip_with_tag(String tag) throws Throwable {
         assertTrue(!driver.getPageSource().contains(tag));
     }
+    
+    @Then("^the new tip has only two tags")
+    public void the_new_tip_has_only_two_tags() throws Throwable {
+        List<WebElement> rows = driver.findElements(By.cssSelector(".table tbody tr"));
+        List<WebElement> tagElements = rows.get(0).findElements(By.className("tag"));
+        assertEquals("Correct amount of tags are added", 2, tagElements.size());
+    }
 
     private void addTip(String title, String author, String url, String desc, String tags) {
         WebElement element = driver.findElement(By.cssSelector("input[name='title']"));
