@@ -96,6 +96,12 @@ public class TipStepdefs extends AbstractStepdefs {
         List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
         assertTipTableElement(tipElements.get(0), title, author, desc);
     }
+    
+    @Then("^a new tip is created with title \"([^\"]*)\" and author \"([^\"]*)\"$")
+    public void a_new_tip_is_created_with_title_and_author(String title, String author) throws Throwable {
+        List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
+        assertTipTableElement(tipElements.get(0), title, author);
+    }
 
     @Then("^a proper form with title, author, url and description is shown$")
     public void a_proper_form_with_title_author_url_and_description_is_shown() throws Throwable {
@@ -207,6 +213,14 @@ public class TipStepdefs extends AbstractStepdefs {
         assertEquals(titleElement.getText(), title);
         assertEquals(authorElement.getText(), author);
         assertEquals(descriptionElement.getText(), desc);
+    }
+    
+    private void assertTipTableElement(WebElement element, String title, String author) {
+        WebElement titleElement = element.findElement(By.className("title"));
+        WebElement authorElement = element.findElement(By.className("author"));
+        WebElement descriptionElement = element.findElement(By.className("description"));
+        assertEquals(titleElement.getText(), title);
+        assertEquals(authorElement.getText(), author);
     }
 
     private void assertCreatedTags(List<String> tagNames) {
