@@ -146,8 +146,8 @@ public class TipController {
     }
 
     private void addTagsByUrlFor(Tip tip) {
-        List<String> rawData = tagsByUrlsManager.getRawData();
-        List<String> tags = tagsByUrlsManager.getTagsByUrl(tip.getUrl(), rawData);
+        //List<String> rawData = tagsByUrlsManager.getRawData();
+        List<String> tags = tagsByUrlsManager.getTagsByUrl(tip.getUrl());
         for (String tag : tags) {
             tip.addTag(getOrCreateTag(tag));
         }
