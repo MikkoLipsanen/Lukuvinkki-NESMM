@@ -61,6 +61,11 @@ public class TipStepdefs extends AbstractStepdefs {
         addTip(title, author, url, desc, tags);
     }
     
+    @When("^field \"([^\"]*)\" is cleared")
+    public void field_is_cleared(String field) throws Throwable {
+        clearTipField(field);
+    }
+
     @Then("^page contains title \"([^\"]*)\", author \"([^\"]*)\", description \"([^\"]*)\" and url \"([^\"]*)\"$")
         public void view_tip_page_showing_tip_information(String title, String author, String description, String url) {
         pageContains(title);
@@ -138,13 +143,34 @@ public class TipStepdefs extends AbstractStepdefs {
     public void list_doesnt_contain_tip_with_tag(String tag) throws Throwable {
         assertTrue(!driver.getPageSource().contains(tag));
     }
-    
+
+    @Then("^view tip page is shown$")
+    public void view_tip_page_is_shown() throws Throwable {
+        pageContains("Lukuvinkin tiedot");
+    }
+
     @Then("^the new tip has only two tags")
     public void the_new_tip_has_only_two_tags() throws Throwable {
         List<WebElement> rows = driver.findElements(By.cssSelector(".table tbody tr"));
         List<WebElement> tagElements = rows.get(0).findElements(By.className("tag"));
         assertEquals("Correct amount of tags are added", 2, tagElements.size());
     }
+
+    @Then("^page contains title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\", description \"([^\"]*)\", tag1 \"([^\"]*)\" and tag2 \"([^\"]*)\"$")
+           public void view_tip_page_showing_edited_information(String title, String author, String description, String url, String tag1, String tag2) {
+           pageContains(title);
+           pageContains(author);
+           pageContains(description);
+           pageContains(url);
+           pageContains(tag1);
+           pageContains(tag2);
+    }
+
+    @Then("^page does not contain deleted field content \"([^\"]*)\"$")
+            public void page_does_not_contain_deleted_content(String content) throws Throwable {
+            assertTrue(!driver.getPageSource().contains(content));
+    }
+
 
     private void addTip(String title, String author, String url, String desc, String tags) {
         WebElement element = driver.findElement(By.cssSelector("input[name='title']"));
@@ -157,6 +183,12 @@ public class TipStepdefs extends AbstractStepdefs {
         element.sendKeys(desc);
         element = driver.findElement(By.cssSelector("input[name='rawTags']"));
         element.sendKeys(tags);
+        element.submit();
+    }
+
+     private void clearTipField(String field) {
+        WebElement element = driver.findElement(By.name(field));
+        element.clear();
         element.submit();
     }
 

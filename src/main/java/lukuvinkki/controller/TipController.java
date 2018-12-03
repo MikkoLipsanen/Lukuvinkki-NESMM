@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import lukuvinkki.util.TagsByUrlsManager;
+import java.util.Set;
 
 @Controller
 public class TipController {
@@ -28,7 +29,7 @@ public class TipController {
 
     @Autowired
     private TagRepository tagRepository;
-    
+
     private final TagsByUrlsManager tagsByUrlsManager = new TagsByUrlsManager();
 
     @GetMapping(value = "/")
@@ -36,12 +37,12 @@ public class TipController {
         return "index";
     }
 
-    @RequestMapping(value="/addTip", method=RequestMethod.GET)
-    public String tipForm(Model model){
+    @RequestMapping(value = "/addTip", method = RequestMethod.GET)
+    public String tipForm(Model model) {
         model.addAttribute("tip", new Tip());
         return "tipForm";
     }
-    
+
     @RequestMapping(value = "/addTip", method = RequestMethod.POST)
     public String tipSubmit(@ModelAttribute Tip tip) {
         addTagsByUrlFor(tip);
@@ -52,7 +53,42 @@ public class TipController {
         }
         tipRepository.save(tip);
         return "redirect:/";
-   }
+    }
+
+    @RequestMapping(value = "/tips/{tipId}/editTip", method = RequestMethod.GET)
+    public String tipEditForm(@PathVariable Long tipId, Model model) {
+        Optional<Tip> optional = tipRepository.findById(tipId);
+        if (optional.isPresent()) {
+            Tip tip = optional.get();
+            String tags = "";
+            for (Tag tag : tip.getTags()) {
+                tags = tags + tag.getName() + ";";
+            }
+            tip.setRawTags(tags);
+            model.addAttribute("tip", optional);
+        }
+        return "tipEdit";
+    }
+
+    @RequestMapping(value = "/tips/{tipId}/editTip", method = RequestMethod.POST)
+    public String editSubmit(@PathVariable Long tipId, @ModelAttribute Tip tip) {
+        Optional<Tip> optional = tipRepository.findById(tipId);
+        if (optional.isPresent()) {
+            Tip editedTip = optional.get();
+            editedTip.setTitle(tip.getTitle());
+            editedTip.setAuthor(tip.getAuthor());
+            editedTip.setUrl(tip.getUrl());
+            editedTip.setDescription(tip.getDescription());
+            editedTip.removeAllTags();
+            TagParser parser = new TagParser(tip.getRawTags());
+            List<Tag> tags = getOrCreateTags(parser.parse());
+            for (Tag tag : tags) {
+                editedTip.addTag(tag);
+            }
+            tipRepository.save(editedTip);
+        }
+        return "redirect:/tips/" + tipId;
+    }
 
     @RequestMapping(value = "/tips/{tipId}", method = RequestMethod.GET)
     public String viewTip(@PathVariable Long tipId, Model model) {
@@ -68,18 +104,18 @@ public class TipController {
         List<Tip> tips = tipRepository.findAllByOrderByCreatedDesc();
         model.addAttribute("tips", tips);
         return "tipList";
-   }
+    }
 
-   @RequestMapping(value = "/tips/{tipId}", method = RequestMethod.POST)
-   public String statusSubmit(@PathVariable Long tipId, Model model){
-       Optional<Tip> optional = tipRepository.findById(tipId);
-       if(optional.isPresent()){
-       Tip tip = optional.get();
-       tip.setStatus(true);
-       tipRepository.save(tip);
-       }
-       return "redirect:/tips";
-   }
+    @RequestMapping(value = "/tips/{tipId}", method = RequestMethod.POST)
+    public String statusSubmit(@PathVariable Long tipId, Model model) {
+        Optional<Tip> optional = tipRepository.findById(tipId);
+        if (optional.isPresent()) {
+            Tip tip = optional.get();
+            tip.setStatus(true);
+            tipRepository.save(tip);
+        }
+        return "redirect:/tips";
+    }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String searchTips(@RequestParam("keyword") String keyword, Model model) {
@@ -108,7 +144,7 @@ public class TipController {
         model.addAttribute("tips", primaryTips);
         return "tipList";
     }
-    
+
     private void addTagsByUrlFor(Tip tip) {
         List<String> rawData = tagsByUrlsManager.getRawData();
         List<String> tags = tagsByUrlsManager.getTagsByUrl(tip.getUrl(), rawData);
@@ -116,7 +152,7 @@ public class TipController {
             tip.addTag(getOrCreateTag(tag));
         }
     }
-    
+
     private List<Tag> getOrCreateTags(List<String> rawTags) {
         List<Tag> tags = new ArrayList<>();
         for (String rawTag : rawTags) {
