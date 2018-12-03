@@ -1,2 +1,2 @@
 youtube => video
-dl.acm.org ieeexplore.iee.org => tieteellinen julkaisu
+dl.acm.org ieeexplore.ieee.org => tieteellinen julkaisu

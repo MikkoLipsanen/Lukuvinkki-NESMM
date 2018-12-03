@@ -6,17 +6,12 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import lukuvinkki.domain.Tip;
 import org.springframework.util.ResourceUtils;
 
 
 public class TagsByUrlsManager {
     
     private static final String FILEPATH = "data/tags_by_urls.txt";
-    
-    public TagsByUrlsManager() {
-        
-    }
     
     public List<String> getRawData() {
         List<String> lines = new ArrayList<>();
