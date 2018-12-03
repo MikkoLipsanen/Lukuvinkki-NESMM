@@ -104,6 +104,10 @@ public class Tip {
         tag.getTips().remove(this);
     }
 
+    public void removeAllTags() {
+        tags.clear();
+    }
+
     public Set<Tag> getTags() {
         return tags;
     }

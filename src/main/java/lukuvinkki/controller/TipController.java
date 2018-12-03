@@ -79,9 +79,9 @@ public class TipController {
             editedTip.setAuthor(tip.getAuthor());
             editedTip.setUrl(tip.getUrl());
             editedTip.setDescription(tip.getDescription());
-            removeAllTagsOfTip(editedTip);
+            editedTip.removeAllTags();
             TagParser parser = new TagParser(tip.getRawTags());
-            List<Tag> tags = getOrCreateTag(parser.parse());
+            List<Tag> tags = getOrCreateTags(parser.parse());
             for (Tag tag : tags) {
                 editedTip.addTag(tag);
             }
@@ -168,13 +168,5 @@ public class TipController {
             tagRepository.save(tag);
         }
         return tag;
-    }
-
-    private Set<Tag> removeAllTagsOfTip(Tip tip) {
-        Set<Tag> tagsOfTip = tip.getTags();
-        for (Tag tag : tagsOfTip) {
-            tip.removeTag(tag);
-        }
-        return tagsOfTip;
     }
 }
