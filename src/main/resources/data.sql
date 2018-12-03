@@ -1,29 +1,34 @@
-INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1000, false, 'Testaus', 'Alex Samurin', 'Any test that passed in unit testing can fail in system testing.', 'extremesoftwaretesting.com/Humor/SoftwareTestingJokes2.html',TO_DATE('07/02/2018', 'DD/MM/YYYY'));
-
-INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1001, false, 'If it hurts, do it more often', 'Matti', 'Adding manpower to a late software project makes it later!', 'https://fullstack-hy.github.io/',TO_DATE('17/11/2018', 'DD/MM/YYYY'));
-INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1002, false, 'TIETOKANTAAN TALLENNETTAVAT OLIOT ELI ENTITEETIT', 'Arto', 'Luokat, joista tehdyt oliot voidaan tallentaa tietokantaan, tulee annotoida @Entity-annotaatiolla.', 'http://web-palvelinohjelmointi.github.io/osa1.html',TO_DATE('01/08/2018', 'DD/MM/YYYY'));
-INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1003, false, 'INTERNETIN PERUSOSAT', 'Arto', 'Internetin peruskomponentit ovat (1) palveluiden, palvelinohjelmistojen ja resurssien yksilöintiin käytetyt merkkijonomuotoiset osoitteet (URI...', 'http://web-palvelinohjelmointi.github.io/osa2.html',TO_DATE('11/09/2018', 'DD/MM/YYYY'));
-INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1004, false, 'HTTP: SELAINTEN JA PALVELINTEN VÄLINEN KOMMUNIKAATIOPROTOKOLLA', 'Arto', 'HTTP (HyperText Transfer Protocol) on TCP/IP -protokolla...', 'http://web-palvelinohjelmointi.github.io/osa2.html',TO_DATE('10/11/2018', 'DD/MM/YYYY'));
-INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1005, false, 'HTTP-VIESTIN RAKENNE PALVELIMELTA SAAPUVA VASTAUS', 'Arto', 'Palvelimelle tehtyyn pyyntöön saadaan aina jonkinlainen vastaus.', 'http://web-palvelinohjelmointi.github.io/osa2.html',TO_DATE('10/10/2018', 'DD/MM/YYYY'));
-INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1006, false, 'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.', 'Matti', 'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.', 'https://fullstack-hy.github.io/',TO_DATE('11/10/2015', 'DD/MM/YYYY'));
-INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1007, false, 'Premature optimization is the root of all evil.', 'Matti', 'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.', 'https://fullstack-hy.github.io/',TO_DATE('12/10/2017', 'DD/MM/YYYY'));
-INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1008, false, 'Model-view-controller', 'Wikipedia','Diagram of interactions within the MVC pattern.
-Model–view–controller is an architectural pattern commonly used for developing user interfaces that divides an application into three interconnected parts.', 'https://en.wikipedia.org/wiki/Model-view-controller',TO_DATE('17/12/2015', 'DD/MM/YYYY'));
+INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1000, false, 'Oliosuunnittelu', 'Matti', 'Tama materiaali on tarkoitettu itseopiskeltavaksi ennen viikon 5, 6 ja 7 laskarien tekemista. Materiaali taydentaa luennon 8 asiaa.', 'https://github.com/mluukkai/ohjelmistotuotanto2018/blob/master/web/oliosuunnittelu.md',TO_DATE('05/12/2018', 'DD/MM/YYYY'));
+INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1001, false, 'Scrum Guide', 'Matti', 'The Definitive Guide to Scrum:The Rules of the Game', 'http://www.scrumguides.org/docs/scrumguide/v1/Scrum-Guide-US.pdf',TO_DATE('04/12/2018', 'DD/MM/YYYY'));
+INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1002, false, 'Scrum and XP from the TrenchesT', 'Matti', '2nd Edition', 'http://www.infoq.com/minibooks/scrum-xp-from-the-trenches',TO_DATE('03/12/2018', 'DD/MM/YYYY'));
+INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1003, false, 'Lean Primer', 'Matti', 'Lean thinking is a proven system that applies to product development and production,as evidenced by Toyota and others', 'http://www.leanprimer.com/downloads/lean_primer.pdf',TO_DATE('02/12/2018', 'DD/MM/YYYY'));
+INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1004, false, 'Design patterns', 'Matti', 'In software engineering, a design pattern is a general repeatable solution to a commonly occurring problem in software design.', 'http://sourcemaking.com/design_patterns',TO_DATE('1/12/2018', 'DD/MM/YYYY'));
+INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1005, false, 'MVC', 'Arto', 'Diagram of interactions within the MVC pattern.Model–view–controller is an architectural pattern commonly used for developing user interfaces that divides an application into three interconnected parts. ', 'https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller',TO_DATE('09/02/2017', 'DD/MM/YYYY'));
+INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1006, false, 'Bootstrap', 'Arto', 'Ulkoasun maarittelyssa kaytetaan usein apuna valmista Twitter Bootstrap -kirjastoa.', 'http://getbootstrap.com/docs/4.1/getting-started/introduction/',TO_DATE('11/10/2015', 'DD/MM/YYYY'));
+INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1007, true, 'Introductory book about Rust', 'Seppo', 'The Rust programming language helps you write faster, more reliable software','https://doc.rust-lang.org/stable/book/second-edition/ch00-00-introduction.html',TO_DATE('17/03/2018', 'DD/MM/YYYY'));
+INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1008, false, 'Python course','freeCodeCamp','In this course Im gonna teach you everything you need to know to get started programmiong in..', 'https://www.youtube.com/watch?v=rfscVS0vtbw',TO_DATE('17/12/2015', 'DD/MM/YYYY'));
 INSERT INTO TIP (id,status,title,author,description,url,created) VALUES (1009, false, 'You never up give', 'Riku', 'I have some serious security to do', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',TO_DATE('01/12/2018', 'DD/MM/YYYY'));
 
+INSERT INTO TAG(id,name) VALUES (1000, 'Ohtu');
 INSERT INTO TAG(id,name) VALUES (1001, 'Wepa');
 INSERT INTO TAG(id,name) VALUES (1002, 'Fullstack');
-INSERT INTO TAG(id,name) VALUES (1003, 'Anecdotes');
+INSERT INTO TAG(id,name) VALUES (1003, 'Python');
+INSERT INTO TAG(id,name) VALUES (1004, 'Misc');
+INSERT INTO TAG(id,name) VALUES (1005, 'Exam');
 
-INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1000,1001);
-INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1000,1002);
-INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1001,1003);
-INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1002,1003);
-INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1003,1001);
-INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1004,1001);
+INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1000,1000);
+INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1000,1005);
+INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1001,1000);
+INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1001,1005);
+INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1002,1000);
+INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1002,1005);
+INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1003,1000);
+INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1003,1005);
+INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1004,1000);
+INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1004,1005);
 INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1005,1001);
+INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1005,1002);
+INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1006,1001);
 INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1006,1002);
-INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1007,1002);
 INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1008,1003);
-INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1009,1001);
-INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1009,1002);
+INSERT INTO TIP_TAGS(tip_id, tag_id) VALUES(1007,1004);

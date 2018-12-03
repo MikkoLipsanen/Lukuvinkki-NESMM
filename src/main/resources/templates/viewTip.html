@@ -6,27 +6,27 @@
     </head>
     <body>
         <h2>Lukuvinkin tiedot</h2>
-        <table width="80%" border="1">
+        <table class="table" width="80%" border="1">
             <thead>
                 <tr>
-                    <td>Otsikko:</td>
+                    <td class="title">Otsikko:</td>
                     <td th:text="${tip.getTitle()}">Title</td>
                 </tr>
                 <tr>
-                    <td>Tekija:</td>
+                    <td class="author">Tekija:</td>
                     <td th:text="${tip.getAuthor()}">Author</td>
                 </tr>
                 <tr>
-                    <td>Sisältö:</td>
+                    <td class="description">Sisältö:</td>
                     <td th:text="${tip.getDescription()}">Description</td>
                 </tr>
                 <tr>
-                    <td>Urli:</td>
+                    <td class="url">Urli:</td>
                     <td> <a th:href="${tip.getUrl()}" th:text="${tip.getUrl()}">Url</td>
                 </tr>
                 <tr>
                     <td>Tagit:</td>
-                     <td class="tags">
+                     <td class="tag">
                         <span class="tag" th:each="tag : ${tip.getTags()}" th:text="${tag.getName()}"></span>
                     </td>
                 </tr>
@@ -40,7 +40,7 @@
                     <span th:unless="${tip.getStatus() == false}">Read</span>
                 </td>
                 <tr>
-                    <td>Lisätty:</td>
+                    <td class="date">Lisätty:</td>
                     <td th:text="${tip.getCreated()}">Date</td>
                 </tr>
             </thead>
