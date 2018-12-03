@@ -38,6 +38,26 @@ Feature: User can create a new tip
     And   command view tips is selected
     Then  the new tip has only two tags
 
+  Scenario: tag "video" is added when creating a tip that is a YouTube video
+    Given command new tip is selected
+    When  title "testtitle", author "testauthor", url "https://www.youtube.com/watch?v=dQw4w9WgXcQ" and description "testdesc" are given
+    And   command view tips is selected
+    Then  following tags are found in newly created tip:
+      |video|
+
+  Scenario: tag "tieteellinen julkaisu" is added when creating a tip that is from ACM DL
+    Given command new tip is selected
+    When  title "testtitle", author "testauthor", url "https://dl.acm.org/citation.cfm?id=950595" and description "testdesc" are given
+    And   command view tips is selected
+    Then  following tags are found in newly created tip:
+      |tieteellinen julkaisu|
+
+  Scenario: tag "tieteellinen julkaisu" is added when creating a tip that is from IEEE Xplore
+    Given command new tip is selected
+    When  title "testtitle", author "testauthor", url "https://ieeexplore.ieee.org/document/6740844" and description "testdesc" are given
+    And   command view tips is selected
+    Then  following tags are found in newly created tip:
+      |tieteellinen julkaisu|
 
 #Scenario: user can not create a new tip without any values
 #    Given command new tip is selected
