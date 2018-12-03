@@ -47,7 +47,7 @@ public class TipController {
     public String tipSubmit(@ModelAttribute Tip tip) {
         addTagsByUrlFor(tip);
         TagParser parser = new TagParser(tip.getRawTags());
-        List<Tag> tags = getOrCreateTags(parser.parse());
+        List<Tag> tags = getOrCreateTag(parser.parse());
         for(Tag tag : tags) {
             tip.addTag(tag);
         }
@@ -81,7 +81,7 @@ public class TipController {
             editedTip.setDescription(tip.getDescription());
             editedTip.removeAllTags();
             TagParser parser = new TagParser(tip.getRawTags());
-            List<Tag> tags = getOrCreateTags(parser.parse());
+            List<Tag> tags = getOrCreateTag(parser.parse());
             for (Tag tag : tags) {
                 editedTip.addTag(tag);
             }
@@ -147,26 +147,23 @@ public class TipController {
 
     private void addTagsByUrlFor(Tip tip) {
         //List<String> rawData = tagsByUrlsManager.getRawData();
-        List<String> tags = tagsByUrlsManager.getTagsByUrl(tip.getUrl());
-        for (String tag : tags) {
-            tip.addTag(getOrCreateTag(tag));
+        List<String> rawTags = tagsByUrlsManager.getTagsByUrl(tip.getUrl());
+        List<Tag> tags = getOrCreateTag(rawTags);
+        for (Tag tag : tags) {
+            tip.addTag(tag);
         }
     }
 
-    private List<Tag> getOrCreateTags(List<String> rawTags) {
+    private List<Tag> getOrCreateTag(List<String> rawTags) {
         List<Tag> tags = new ArrayList<>();
         for (String rawTag : rawTags) {
-            tags.add(getOrCreateTag(rawTag));
+            Tag tag = tagRepository.findTagByName(rawTag);
+            if (tag == null) {
+                tag = new Tag(rawTag);
+                tagRepository.save(tag);
+            }
+            tags.add(tag);
         }
         return tags;
-    }
-
-    private Tag getOrCreateTag(String rawTag) {
-        Tag tag = tagRepository.findTagByName(rawTag);
-        if (tag == null) {
-            tag = new Tag(rawTag);
-            tagRepository.save(tag);
-        }
-        return tag;
     }
 }

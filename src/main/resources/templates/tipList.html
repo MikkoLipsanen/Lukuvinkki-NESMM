@@ -23,7 +23,6 @@
                     <tr>
                         <td>Otsikko</td>
                         <td>Tekijä</td>
-                        <td>Sisältö</td>
                         <td>Tagit</td>
                         <td>Status</td>
                     </tr>
@@ -32,7 +31,6 @@
                     <tr th:each="tip : ${tips}" th:id="'tip-' + ${tip.getId()}" >
                         <td class="title"><a th:href="@{'/tips/' + ${tip.id}}" th:text="${tip.getTitle()}" /></td>
                         <td class="author" th:text="${tip.getAuthor()}"></td>
-                        <td class="description" th:text="${tip.getDescription()}"></td>
                         <td class="tags">
                             <span class="tag" th:each="tag : ${tip.getTags()}" th:text="${tag.getName()}"></span>
                         </td>

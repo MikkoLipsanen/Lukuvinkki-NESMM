@@ -14,7 +14,9 @@ public class TagParser {
     public List<String> parse() {
         return Arrays.stream(this.tags.split(";"))
                 .map(String::trim)
+                .map(String::toLowerCase)
                 .filter(v -> !v.isEmpty())
+                .distinct()
                 .collect(Collectors.toList());
     }
 }
