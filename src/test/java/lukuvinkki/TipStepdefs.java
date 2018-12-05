@@ -145,9 +145,9 @@ public class TipStepdefs extends AbstractStepdefs {
         assertTagsInTipTableRow(rows.get(0), tags);
     }
 
-    @Then("^the main page is shown$")
-    public void the_main_page_is_shown() throws Throwable {
-        pageContains("Lukuvinkit");
+    @Then("^the page of the new tip is shown$")
+    public void page_of_tip_is_shown() throws Throwable {
+        pageContains("Lukuvinkin tiedot");
     }
 
     @Then("^list doesnt contain tip with tag \"([^\"]*)\"$")

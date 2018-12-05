@@ -53,7 +53,7 @@ public class TipController {
             tip.addTag(tag);
         }
         tipRepository.save(tip);
-        return "redirect:/";
+        return "redirect:/tips/" + tip.getId();
     }
 
     @RequestMapping(value = "/tips/{tipId}/editTip", method = RequestMethod.GET)
