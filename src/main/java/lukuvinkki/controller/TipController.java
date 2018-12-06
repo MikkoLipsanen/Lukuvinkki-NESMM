@@ -98,6 +98,7 @@ public class TipController {
         Tip tip = optional.get();
         model.addAttribute("tip", tip);
         model.addAttribute("newComment", new Comment());
+        model.addAttribute("comments", tip.getComments());
         return "viewTip";
    }
     

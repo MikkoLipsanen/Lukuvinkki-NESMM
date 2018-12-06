@@ -74,6 +74,24 @@
             </table>
         </form>
         <br><br>
+        <h3>Kommentit</h3>
+        <table class="table" width="80%" border="1">
+            <thead>
+            <tr>
+                <th>Nimi</th>
+                <th>Kommentti</th>
+                <th>Kirjoitettu</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="comment : ${comments}">
+                <td class="nickname" th:text="${comment.getNickname()}"></td>
+                <td class="content" th:text="${comment.getContent()}"></td>
+                <td class="time" th:text="${comment.getCreated()}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <br><br>
         <p>Katso lukuvinkit <a href="/tips">täältä</a></p>
         <p>Lisää uusi <a href="/addTip">lukuvinkki</a></p>
     </body>
