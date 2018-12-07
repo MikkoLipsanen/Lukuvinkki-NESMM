@@ -53,6 +53,14 @@
                             </form>
                     </td>
                 </tr>
+                <tr>
+                <td>Poista vinkki:</td>
+                <td class="delete">
+                    <form th:action="@{/tips/{tipId}/deleteTip (tipId=${tip.getId()})}" th:method="POST">
+                        <button type="submit" name="delete">Poista</button>
+                    </form>
+                </td>
+            </tr>
             </thead>
             <tbody>
             </tbody>

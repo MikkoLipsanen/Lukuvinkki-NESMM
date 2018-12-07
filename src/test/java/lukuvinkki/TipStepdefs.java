@@ -31,7 +31,6 @@ public class TipStepdefs extends AbstractStepdefs {
     @Resource
     private TagRepository tagRepository;
 
-
     @Given("^user is on a tip a page$")
     public void user_is_on_a_tip_page() {
         driver.get(BASE_URL + "tips/" + dummyTip1.getId());
@@ -43,7 +42,7 @@ public class TipStepdefs extends AbstractStepdefs {
         webElement.click();
         addTip(title, author, url, desc, "");
     }
-    
+
     @Given("^there are some tips created$")
     public void there_are_some_tips_created() throws Throwable {
         saveDummyTips();
@@ -65,14 +64,14 @@ public class TipStepdefs extends AbstractStepdefs {
     public void title_author_url_description_and_tags_are_given(String title, String author, String url, String desc, String tags) throws Throwable {
         addTip(title, author, url, desc, tags);
     }
-    
+
     @When("^field \"([^\"]*)\" is cleared")
     public void field_is_cleared(String field) throws Throwable {
         clearTipField(field);
     }
 
     @Then("^page contains title \"([^\"]*)\", author \"([^\"]*)\", description \"([^\"]*)\" and url \"([^\"]*)\"$")
-        public void view_tip_page_showing_tip_information(String title, String author, String description, String url) {
+    public void view_tip_page_showing_tip_information(String title, String author, String description, String url) {
         pageContains(title);
         pageContains(author);
         pageContains(description);
@@ -101,7 +100,7 @@ public class TipStepdefs extends AbstractStepdefs {
         List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
         assertTipTableElement(tipElements.get(0), title, author);
     }
-    
+
     @Then("^a new tip is created with title \"([^\"]*)\" and author \"([^\"]*)\"$")
     public void a_new_tip_is_created_with_title_and_author(String title, String author) throws Throwable {
         List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
@@ -133,7 +132,7 @@ public class TipStepdefs extends AbstractStepdefs {
     }
 
     @Then("^page shows tip marked as read$")
-    public void page_shows_tip_as_read()throws Throwable {
+    public void page_shows_tip_as_read() throws Throwable {
         assertTrue(driver.getPageSource().contains("Read"));
     }
 
@@ -160,6 +159,11 @@ public class TipStepdefs extends AbstractStepdefs {
         pageContains("Lukuvinkin tiedot");
     }
 
+    @Then("^the list of tips is shown$")
+    public void the_list_of_tips_is_shown() throws Throwable {
+        pageContains("Haku:");
+    }
+
     @Then("^the new tip has only two tags")
     public void the_new_tip_has_only_two_tags() throws Throwable {
         List<WebElement> rows = driver.findElements(By.cssSelector(".table tbody tr"));
@@ -168,20 +172,27 @@ public class TipStepdefs extends AbstractStepdefs {
     }
 
     @Then("^page contains title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\", description \"([^\"]*)\", tag1 \"([^\"]*)\" and tag2 \"([^\"]*)\"$")
-           public void view_tip_page_showing_edited_information(String title, String author, String description, String url, String tag1, String tag2) {
-           pageContains(title);
-           pageContains(author);
-           pageContains(description);
-           pageContains(url);
-           pageContains(tag1);
-           pageContains(tag2);
+    public void view_tip_page_showing_edited_information(String title, String author, String description, String url, String tag1, String tag2) {
+        pageContains(title);
+        pageContains(author);
+        pageContains(description);
+        pageContains(url);
+        pageContains(tag1);
+        pageContains(tag2);
     }
 
     @Then("^page does not contain deleted field content \"([^\"]*)\"$")
-            public void page_does_not_contain_deleted_content(String content) throws Throwable {
-            assertTrue(!driver.getPageSource().contains(content));
+    public void page_does_not_contain_deleted_content(String content) throws Throwable {
+        assertTrue(!driver.getPageSource().contains(content));
     }
 
+    @Then("^the page does not contain a tip with title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\"$")
+    public void the_list_of_tips_does_not_contain_deleted_tip(String title, String author, String url, String description) throws Throwable {
+        assertTrue(!driver.getPageSource().contains(title));
+        assertTrue(!driver.getPageSource().contains(author));
+        assertTrue(!driver.getPageSource().contains(url));
+        assertTrue(!driver.getPageSource().contains(description));
+    }
 
     private void addTip(String title, String author, String url, String desc, String tags) {
         WebElement element = driver.findElement(By.cssSelector("input[name='title']"));
@@ -197,7 +208,7 @@ public class TipStepdefs extends AbstractStepdefs {
         element.submit();
     }
 
-     private void clearTipField(String field) {
+    private void clearTipField(String field) {
         WebElement element = driver.findElement(By.name(field));
         element.clear();
         element.submit();
@@ -210,7 +221,7 @@ public class TipStepdefs extends AbstractStepdefs {
             assertTrue("Tag element is found", tags.contains(tagElement.getText()));
         }
     }
-    
+
     private void assertTipTableElement(WebElement element, String title, String author) {
         WebElement titleElement = element.findElement(By.className("title"));
         WebElement authorElement = element.findElement(By.className("author"));

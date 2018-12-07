@@ -58,11 +58,17 @@ public class NavigationStepdefs extends AbstractStepdefs {
         WebElement webElement = driver.findElement(By.name("markAsRead"));
         webElement.click();
     }
-    
-    @When("^command edit tip is selected$")   
-       public void command_edit_tip_is_selected()throws Throwable {
-       WebElement webElement = driver.findElement(By.name("edit"));
-       webElement.click();
+
+    @When("^command edit tip is selected$")
+    public void command_edit_tip_is_selected() throws Throwable {
+        WebElement webElement = driver.findElement(By.name("edit"));
+        webElement.click();
+    }
+
+    @When("^command delete tip is selected$")
+    public void command_delete_tip_is_selected() throws Throwable {
+        WebElement webElement = driver.findElement(By.name("delete"));
+        webElement.click();
     }
 
     @When("^search is done with keyword \"([^\"]*)\"$")
@@ -74,7 +80,7 @@ public class NavigationStepdefs extends AbstractStepdefs {
     public void command_search_is_selected_with_mismatching_keyword(String keyword) throws Throwable {
         searchTips(keyword);
     }
-        
+
     @Then("^the current url address is \"([^\"]*)\"$")
     public void the_current_url_address_is_correct(String url) throws Throwable {
         driver.getCurrentUrl();
