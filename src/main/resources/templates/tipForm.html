@@ -5,6 +5,7 @@
     </head>
     <body>
         <div th:include="fragment/menu">Menubar</div>
+        <div class="container">
         <br/>
         <h2>Lisää uusi lukuvinkki!</h2>
         <br/>
@@ -31,13 +32,12 @@
                     <td><input type="text" th:field="*{rawTags}" /></td>
                 </tr>
                 <tr>
-                    <td><button type="submit" name="submit" >Lisää vinkki</button></td>
+                    <td><button class="btn waves-effect waves-light" type="submit" name="submit">Lisää vinkki
+                         <i class="material-icons right">send</i>
+                        </button></td>
                 </tr>
             </table>
         </form>
-
-
-        <br></br>
-        <a href="/">Palaa aloitussivulle</a>
+        </div>
     </body>
 </html>
