@@ -4,21 +4,9 @@
         <title>title</title>
     </head>
     <body>
+        <div th:include="fragment/menu">Menubar</div>
         <div>
-            <form action="#" th:action="@{/search}" method="get">
-                <table>
-                    <tr>
-                        <td>Haku:</td>
-                        <td><input name="keyword" type="text"/></td>
-                    </tr>
-                    <tr>
-                        <td><button type="submit">Hae</button></td>
-                    </tr>
-                </table>
-            </form>
-        </div>
-        <div>
-            <table class="table">
+            <table class="nth-table">
                 <thead>
                     <tr>
                         <td>Otsikko</td>
@@ -37,10 +25,10 @@
                         <td class="status">
                             <span th:if="${tip.getStatus() == false}">
                                 <form th:action="@{/tips/{tipId}(tipId=${tip.getId()})}" th:method="POST">
-                                    <button type="submit" name="markAsRead">Mark as Read</button>
+                                    <button type="submit" name="markAsRead"><i class="material-icons">gavel</i></button>
                                 </form>
                             </span>
-                            <span th:unless="${tip.getStatus() == false}">Read</span>
+                            <span th:unless="${tip.getStatus() == false}"><i class="material-icons">done</i></span>
                         </td>
                     </tr>
                 </tbody>
