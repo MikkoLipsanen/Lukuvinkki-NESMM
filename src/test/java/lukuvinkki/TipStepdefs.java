@@ -38,7 +38,7 @@ public class TipStepdefs extends AbstractStepdefs {
 
     @Given("^tip with title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\" is created$")
     public void tip_with_given_fields_is_created(String title, String author, String url, String desc) throws Throwable {
-        WebElement webElement = driver.findElement(By.linkText("lukuvinkki"));
+        WebElement webElement = driver.findElement(By.linkText("Lisää"));
         webElement.click();
         addTip(title, author, url, desc, "");
     }
@@ -50,7 +50,7 @@ public class TipStepdefs extends AbstractStepdefs {
 
     @Given("^tip is created with tag \"([^\"]*)\"$")
     public void tip_is_created_with_tag(String tag) throws Throwable {
-        WebElement webElement = driver.findElement(By.linkText("lukuvinkki"));
+        WebElement webElement = driver.findElement(By.linkText("Lisää"));
         webElement.click();
         addTip("plaah", "plaah", "plaah", "plaah", tag);
     }
