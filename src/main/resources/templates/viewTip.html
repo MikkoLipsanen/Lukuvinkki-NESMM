@@ -7,9 +7,8 @@
     </head>
     <body>
         <div th:include="fragment/menu">Menubar</div>
-        <h2>Lukuvinkin tiedot</h2>
-        <table class="table" width="80%" border="1">
-            <thead>
+        <div class="container">
+        <table class="nth-table" width="80%" border="1">
                 <tr>
                     <td class="title">Otsikko:</td>
                     <td th:text="${tip.getTitle()}">Title</td>
@@ -62,12 +61,8 @@
                     </form>
                 </td>
             </tr>
-            </thead>
-            <tbody>
-            </tbody>
         </table>
-        <br><br>
-        <form action="#" th:action="@{/comments/{tipId}/addComment(tipId=${tip.getId()})}" th:object="${newComment}" method="post">
+            <form action="#" th:action="@{/comments/{tipId}/addComment(tipId=${tip.getId()})}" th:object="${newComment}" method="post">
             <table>
                 <tr>
                     <td>Nimi:</td>
@@ -78,11 +73,10 @@
                     <td><textarea name="content" type="text" th:field="*{content}"/></td>
                 </tr>
                 <tr>
-                    <td><button type="submit">Lähetä</button></td>
+                    <td><button class="btn waves-effect waves-light" type="submit" name="action">Lähetä<i class="material-icons right">send</i></button></td>
                 </tr>
             </table>
-        </form>
-        <br><br>
+            </form>
         <h3>Kommentit</h3>
         <table class="table" width="80%" border="1">
             <thead>
@@ -100,8 +94,7 @@
             </tr>
             </tbody>
         </table>
-        <br><br>
-        <p>Katso lukuvinkit <a href="/tips">täältä</a></p>
-        <p>Lisää uusi <a href="/addTip">lukuvinkki</a></p>
+                </div>
     </body>
+
 </html>
