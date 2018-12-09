@@ -1,35 +1,29 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-     <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     </head>
   <body>
       <div class="container">
         <nav>
             <div class="nav-wrapper">
                 <a class="brand-logo right" href="/">Lukuvinkki</a>
-<!--                <a class="right button-collapse" href="#" data-activates="nav-mobile">
-                <i class="mdi-navigation-more-vert"></i></a>-->
-               <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="left hide-on-med-and-down" id="nav-mobile">
-                <li><a href="/tips">Lukuvinkit</a></li>
-                <li><a href="/addTip">Lisää</a></li>
-                <li><i class="material-icons">search</i></li>
-              </ul>
-              <form class="red lighten-3" action="#" th:action="@{/search}" method="get">
+                    <li><a href="/tips">Lukuvinkit</a></li>
+                    <li><a href="/addTip">Lisää</a></li>
+                    <li><i class="material-icons">search</i></li>
+                </ul>
+                <form class="red lighten-3" action="#" th:action="@{/search}" method="get">
                 <div class="input-field">
                   <input id="search" name="keyword" type="search"/>
                   <label for="search"></label><i class="mdi-navigation-close close"></i>
-               </div>
-              </form>
-              <ul class="side-nav" id="mobile-demo">
-                <li class="active"><a href="/tips">Lukuvinkit</a></li>
-                <li><a href="/addTip">Lisää</a></li>
-                <li><a href="/">Haku</a></li>
-              </ul>
+                </div>
+                </form>
+                <ul class="side-nav" id="mobile-demo">
+                    <li class="active"><a href="/tips">Lukuvinkit</a></li>
+                    <li><a href="/addTip">Lisää</a></li>
+                    <li><a href="/">Haku</a></li>
+                </ul>
             </div>
           </nav>
       </div>
