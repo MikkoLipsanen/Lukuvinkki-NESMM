@@ -31,7 +31,7 @@ public class TipStepdefs extends AbstractStepdefs {
     @Resource
     private TagRepository tagRepository;
 
-    @Given("^user is on a tip a page$")
+    @Given("^user is on a tip page$")
     public void user_is_on_a_tip_page() {
         driver.get(BASE_URL + "tips/" + dummyTip1.getId());
     }

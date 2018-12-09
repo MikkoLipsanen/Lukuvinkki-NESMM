@@ -33,8 +33,10 @@ public class TipController {
 
     private final TagsByUrlsManager tagsByUrlsManager = new TagsByUrlsManager();
 
-    @GetMapping(value = "/")
-    public String index() {
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index(Model model) {
+        List<Tip> tips = tipRepository.findAllByOrderByCreatedDesc();
+        model.addAttribute("tips", tips);
         return "index";
     }
 
@@ -116,7 +118,7 @@ public class TipController {
    public String viewTips(Model model) {
         List<Tip> tips = tipRepository.findAllByOrderByCreatedDesc();
         model.addAttribute("tips", tips);
-        return "tipList";
+        return "index";
     }
 
     @RequestMapping(value = "/tips/{tipId}", method = RequestMethod.POST)
@@ -136,7 +138,7 @@ public class TipController {
         if (keyword.isEmpty()) {
             List<Tip> allTips = tipRepository.findAllByOrderByCreatedDesc();
             model.addAttribute("tips", allTips);
-            return "tipList";
+            return "index";
         }
 
         // PRIMARY SEARCH BY TAGS OF TIPS
@@ -155,7 +157,7 @@ public class TipController {
         primaryTips.addAll(secondaryTips);
 
         model.addAttribute("tips", primaryTips);
-        return "tipList";
+        return "index";
     }
 
     private void addTagsByUrlFor(Tip tip) {
