@@ -11,7 +11,7 @@
         <form action="#" th:action="@{/tips/{tipId}/editTip (tipId=${tipId})}" th:object="${tip}" method="post">
             <table>
                 <tr>
-                    <td>Nimi:</td>
+                    <td width="10%">Nimi:</td>
                     <td><input type="text" th:field="*{title}" /></td>
                 </tr>
                 <tr>
