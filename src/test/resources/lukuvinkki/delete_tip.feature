@@ -1,5 +1,5 @@
-Feature: User can delete a tip
-
+#Feature: User can delete a tip
+#
 #  Scenario: user deletes an existing tip
 #    Given tip with title "poistettava", author "tekijä", url "urli" and description "kuvaus" is created
 #    And command view tips is selected

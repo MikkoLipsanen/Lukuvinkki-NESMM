@@ -80,7 +80,7 @@ public class TipStepdefs extends AbstractStepdefs {
 
     @Then("^page contains a list of tips with tag matches shown first")
     public void page_contains_a_list_of_tips_with_tag_matches_shown_first() throws Throwable {
-        List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
+        List<WebElement> tipElements = driver.findElements(By.cssSelector(".nth-table tbody tr"));
         assertTipTableElement(tipElements.get(0), dummyTip3.getTitle(), dummyTip3.getAuthor()); // tag match, created later
         assertTipTableElement(tipElements.get(1), dummyTip1.getTitle(), dummyTip1.getAuthor()); // tag match
         assertTipTableElement(tipElements.get(2), dummyTip4.getTitle(), dummyTip4.getAuthor()); // title match
@@ -88,7 +88,7 @@ public class TipStepdefs extends AbstractStepdefs {
 
     @Then("^page contains a list of tips sorted by creation time$")
     public void page_contains_a_list_of_tips_sorted_by_creation_time() throws Throwable {
-        List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
+        List<WebElement> tipElements = driver.findElements(By.cssSelector(".nth-table tbody tr"));
         assertTipTableElement(tipElements.get(0), dummyTip4.getTitle(), dummyTip4.getAuthor());
         assertTipTableElement(tipElements.get(1), dummyTip3.getTitle(), dummyTip3.getAuthor());
         assertTipTableElement(tipElements.get(2), dummyTip2.getTitle(), dummyTip2.getAuthor());
@@ -97,7 +97,7 @@ public class TipStepdefs extends AbstractStepdefs {
 
     @Then("^a new tip is created with title \"([^\"]*)\", author \"([^\"]*)\" and description \"([^\"]*)\"$")
     public void a_new_tip_is_created_with_title_author_and_description(String title, String author, String desc) throws Throwable {
-        List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
+        List<WebElement> tipElements = driver.findElements(By.cssSelector(".nth-table tbody tr"));
         assertTipTableElement(tipElements.get(0), title, author);
     }
 
@@ -121,7 +121,7 @@ public class TipStepdefs extends AbstractStepdefs {
     @Then("^following tags are found in newly created tip:$")
     public void following_tags_are_found_in_newly_created_tip(DataTable dt) {
         List<String> tags = dt.asList(String.class);
-        List<WebElement> rows = driver.findElements(By.cssSelector(".table tbody tr"));
+        List<WebElement> rows = driver.findElements(By.cssSelector(".nth-table tbody tr"));
         assertTagsInTipTableRow(rows.get(0), tags);
     }
 
@@ -140,7 +140,7 @@ public class TipStepdefs extends AbstractStepdefs {
     public void list_contains_tip_with_tag(String tag) throws Throwable {
         List<String> tags = new ArrayList<>();
         tags.add(tag);
-        List<WebElement> rows = driver.findElements(By.cssSelector(".table tbody tr"));
+        List<WebElement> rows = driver.findElements(By.cssSelector(".nth-table tbody tr"));
         assertTagsInTipTableRow(rows.get(0), tags);
     }
 
@@ -166,7 +166,7 @@ public class TipStepdefs extends AbstractStepdefs {
 
     @Then("^the new tip has only two tags")
     public void the_new_tip_has_only_two_tags() throws Throwable {
-        List<WebElement> rows = driver.findElements(By.cssSelector(".table tbody tr"));
+        List<WebElement> rows = driver.findElements(By.cssSelector(".nth-table tbody tr"));
         List<WebElement> tagElements = rows.get(0).findElements(By.className("tag"));
         assertEquals("Correct amount of tags are added", 2, tagElements.size());
     }
