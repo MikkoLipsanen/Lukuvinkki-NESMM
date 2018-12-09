@@ -19,6 +19,12 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+.headline {
+    font-size: larger;
+    color: white;
+    background: #4db6ac; 
+}
+
 .table {
     border-collapse: collapse;
     width: 100%;
@@ -47,8 +53,8 @@ body {
   }
   
   .nth-table thead tr td{
-    background-color: white;
-    color: black;
+    background-color: #4db6ac;
+    color: white;
     font-weight: bold;
     font-size: 1.2em;
 }

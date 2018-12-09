@@ -28,9 +28,9 @@
                 </tr>
                 <tr>
                     <td>Tagit:</td>
-                     <td class="tag">
-                        <span class="tag" th:each="tag : ${tip.getTags()}" th:text="${tag.getName()}"></span>
-                    </td>
+                        <td class="tags">
+                            <span class="tag" th:each="tag : ${tip.getTags()}" th:text="${tag.getName()}"></span>
+                        </td>
                 </tr>
                 <td>Luettu:</td>
                 <td class="status">
@@ -71,7 +71,7 @@
         <form action="#" th:action="@{/comments/{tipId}/addComment(tipId=${tip.getId()})}" th:object="${newComment}" method="post">
             <table>
                 <tr>
-                    <td>Nimi:</td>
+                    <td widht="10%">Nimi:</td>
                     <td><input name="nickname" type="text" th:field="*{nickname}" /></td>
                 </tr>
                 <tr>
@@ -85,9 +85,9 @@
                 </tr>
             </table>
         </form>
-        <h3>Kommentit</h3>
-        <table class="table" width="80%" border="1">
-            <thead>
+        <div class="card teal lighten-2"><p class="headline">Kommentit</p></div>
+        <table class="nth-table">
+            <thead class="thead">
             <tr>
                 <th>Nimi</th>
                 <th>Kommentti</th>
@@ -102,7 +102,7 @@
             </tr>
             </tbody>
         </table>
-                </div>
+        </div>
+        <div th:include="fragment/footer">Footer</div>
     </body>
-
 </html>
