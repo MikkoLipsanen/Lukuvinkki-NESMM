@@ -20,19 +20,20 @@ public class NavigationStepdefs extends AbstractStepdefs {
     
     @Given("^command view tips is selected$")
     public void command_view_tips_is_selected() throws Throwable {
-        WebElement webElement = driver.findElement(By.linkText("täältä"));
+        WebElement webElement = driver.findElement(By.linkText("Lukuvinkit"));
         webElement.click();
     }
 
     @Given("^command new tip is selected$")
     public void command_new_tip_is_selected() throws Throwable {
-        WebElement webElement = driver.findElement(By.linkText("lukuvinkki"));
+        WebElement webElement = driver.findElement(By.linkText("Lisää"));
         webElement.click();
     }
 
     @Given("^command search is selected$")
     public void command_search_is_selected() throws Throwable {
-        //driver.get(BASE_URL);
+        WebElement webElement = driver.findElement(By.linkText("Lukuvinkit"));
+        webElement.click();
     }
 
     @Given("^command submit tip is selected$")
@@ -60,17 +61,11 @@ public class NavigationStepdefs extends AbstractStepdefs {
         WebElement webElement = driver.findElement(By.name("markAsRead"));
         webElement.click();
     }
-
-    @When("^command edit tip is selected$")
-    public void command_edit_tip_is_selected() throws Throwable {
-        WebElement webElement = driver.findElement(By.name("edit"));
-        webElement.click();
-    }
-
-    @When("^command delete tip is selected$")
-    public void command_delete_tip_is_selected() throws Throwable {
-        WebElement webElement = driver.findElement(By.name("delete"));
-        webElement.click();
+    
+    @When("^command edit tip is selected$")   
+       public void command_edit_tip_is_selected()throws Throwable {
+       WebElement webElement = driver.findElement(By.name("edit"));
+       webElement.click();
     }
 
     @When("^search is done with keyword \"([^\"]*)\"$")
@@ -82,7 +77,7 @@ public class NavigationStepdefs extends AbstractStepdefs {
     public void command_search_is_selected_with_mismatching_keyword(String keyword) throws Throwable {
         searchTips(keyword);
     }
-
+        
     @Then("^the current url address is \"([^\"]*)\"$")
     public void the_current_url_address_is_correct(String url) throws Throwable {
         driver.getCurrentUrl();

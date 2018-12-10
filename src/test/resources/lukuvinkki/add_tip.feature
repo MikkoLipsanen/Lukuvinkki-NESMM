@@ -4,7 +4,7 @@ Feature: User can create a new tip
     Given command new tip is selected
     Then  a proper form with title, author, url and description is shown
 
-  Scenario: after creating a tip the main page is shown 
+  Scenario: after creating a tip the page of the new tip is shown
     Given command new tip is selected
     When  title "testtitle", author "testauthor", url "testurl" and description "testdesc" are given
     Then  the page of the new tip is shown

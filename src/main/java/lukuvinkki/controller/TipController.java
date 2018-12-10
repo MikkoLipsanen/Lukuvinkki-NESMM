@@ -111,7 +111,7 @@ public class TipController {
         model.addAttribute("tip", tip);
         model.addAttribute("newComment", new Comment());
         model.addAttribute("comments", tip.getComments());
-        return "viewTip";
+        return "tipView";
    }
     
    @RequestMapping(value = "/tips", method = RequestMethod.GET)
