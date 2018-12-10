@@ -110,7 +110,7 @@ public class TipStepdefs extends AbstractStepdefs {
 
     @Then("^a proper form with title, author, url and description is shown$")
     public void a_proper_form_with_title_author_url_and_description_is_shown() throws Throwable {
-        List<WebElement> webElements = driver.findElements(By.cssSelector("input"));
+        List<WebElement> webElements = driver.findElements(By.cssSelector(".formtable tr td:nth-child(2) input"));
         webElements.forEach(element -> assertEquals(element.getAttribute("type"), "text"));
         assertEquals("title", webElements.get(0).getAttribute("name"));
         assertEquals("author", webElements.get(1).getAttribute("name"));
@@ -147,7 +147,10 @@ public class TipStepdefs extends AbstractStepdefs {
 
     @Then("^the page of the new tip is shown$")
     public void page_of_tip_is_shown() throws Throwable {
-        pageContains("Lukuvinkin tiedot");
+        pageContains("Otsikko:");
+        pageContains("Tekijä:");
+        pageContains("Muokkaa vinkkiä:");
+        pageContains("Poista vinkki:");
     }
 
     @Then("^list doesnt contain tip with tag \"([^\"]*)\"$")

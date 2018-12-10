@@ -42,10 +42,11 @@ public class CommentStepdefs extends AbstractStepdefs {
     
     @Then("^tip page contains a list of comments sorted by creation time$")
     public void page_contains_a_list_of_comments_sorted_by_creation_time() throws Throwable {
-        List<WebElement> commentElements = driver.findElements(By.cssSelector(".nth-table tbody tr"));
+        List<WebElement> commentElements = driver.findElements(By.cssSelector(".comment-table tbody tr"));
         assertCommentTableElement(commentElements.get(0), "Bar Man", "romanus sum");
         assertCommentTableElement(commentElements.get(1), "Mars Bar", "muspi meroL");
         assertCommentTableElement(commentElements.get(2), "Foo Bar", "Lorem ipsum");
+        //List<WebElement> commentElements = driver.findElements(By.xpath("/body/table[last()]/tr[2]"));
     }
 
     private void createNewComment(String nickname, String content) {
