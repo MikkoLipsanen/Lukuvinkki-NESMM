@@ -13,16 +13,19 @@ public class NavigationStepdefs extends AbstractStepdefs {
     @Autowired
     private WebDriver driver;
 
+    @Given("^user is on the index page$")
+    public void user_is_on_the_index_page() throws Throwable {
+        driver.get(BASE_URL);
+    }
+    
     @Given("^command view tips is selected$")
     public void command_view_tips_is_selected() throws Throwable {
-        //TODO: Add a proper id to the link
         WebElement webElement = driver.findElement(By.linkText("Lukuvinkit"));
         webElement.click();
     }
 
     @Given("^command new tip is selected$")
     public void command_new_tip_is_selected() throws Throwable {
-        //TODO: Add a proper id to the link
         WebElement webElement = driver.findElement(By.linkText("Lisää"));
         webElement.click();
     }

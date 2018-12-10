@@ -31,8 +31,7 @@ public class TipStepdefs extends AbstractStepdefs {
     @Resource
     private TagRepository tagRepository;
 
-
-    @Given("^user is on a tip a page$")
+    @Given("^user is on a tip page$")
     public void user_is_on_a_tip_page() {
         driver.get(BASE_URL + "tips/" + dummyTip1.getId());
     }
@@ -160,7 +159,10 @@ public class TipStepdefs extends AbstractStepdefs {
 
     @Then("^view tip page is shown$")
     public void view_tip_page_is_shown() throws Throwable {
-        pageContains("Lukuvinkin tiedot");
+        pageContains("Otsikko:");
+        pageContains("Tekijä:");
+        pageContains("Muokkaa vinkkiä:");
+        pageContains("Poista vinkki:");
     }
 
     @Then("^the new tip has only two tags")

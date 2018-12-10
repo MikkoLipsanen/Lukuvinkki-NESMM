@@ -1,14 +1,38 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:include="fragment/base :: head (title='Lukuvinkki applikaatio')">
+    <head th:include="fragment/base :: head (title='Lukuvinkki')">
         <title>title</title>
     </head>
     <body>
         <div th:include="fragment/menu">Menubar</div>
         <div class="container">
-            <h1>Lukuvinkit</h1>
-            <p>Katso lukuvinkit <a href="/tips">täältä</a></p>
-            <p>Lisää uusi <a href="/addTip">lukuvinkki</a></p>
+            <table class="nth-table">
+                <thead class="thead">
+                    <tr>
+                        <td>Otsikko</td>
+                        <td>Tekijä</td>
+                        <td>Tagit</td>
+                        <td>Status</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="tip : ${tips}" th:id="'tip-' + ${tip.getId()}" >
+                        <td class="title"><a th:href="@{'/tips/' + ${tip.id}}" th:text="${tip.getTitle()}" /></td>
+                        <td class="author" th:text="${tip.getAuthor()}"></td>
+                        <td class="tags">
+                            <span class="tag" th:each="tag : ${tip.getTags()}" th:text="${tag.getName()}"></span>
+                        </td>
+                        <td class="status">
+                            <span th:if="${tip.getStatus() == false}">
+                                <form th:action="@{/tips/{tipId}(tipId=${tip.getId()})}" th:method="POST">
+                                    <button type="submit" name="markAsRead"><i class="material-icons">gavel</i></button>
+                                </form>
+                            </span>
+                            <span th:unless="${tip.getStatus() == false}"><i class="material-icons">done</i></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div th:include="fragment/footer">Footer</div>
     </body>
