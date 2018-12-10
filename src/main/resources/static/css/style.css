@@ -1,7 +1,28 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
 
+nav .hide-on-med-and-down {
+    position: absolute;
+    left: 0px;
+}
+
+nav .brand-logo {
+    position: absolute;
+    right: 0px;
+}
+nav form {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
+}
+
+.headline {
+    font-size: larger;
+    color: white;
+    background: #4db6ac; 
 }
 
 .table {
@@ -22,9 +43,51 @@ body {
 }
 
 .table tbody tr:nth-child(odd) {
-    background-color: #515151;
+    background-color: #26a69a;
     color: white;
 }
+
+.nth-table {
+    border-collapse: collapse;
+    border: 1px solid #824100;
+  }
+  
+  .nth-table thead tr td{
+    background-color: #4db6ac;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+ 
+ .nth-table tr:nth-child(odd){
+        background: #9DCECE;
+    }
+ 
+.nth-table th{
+    border: 1px dotted #FFA346;
+    color: #3E5260;
+    padding:12px;
+  }
+ 
+.nth-table td{
+    border: 1px dashed #000;
+    color: #002F5E;
+    padding:12px;
+    width:90px;
+  }
+
+table a:link {color: tomato;
+            font-weight: bold;}
+table a:visited {color: tomato;
+            font-weight: bold;}
+table a:hover {color: hotpink;}
+table a:active {color: #FF00FF;}
+table a:focus {color: #FFFF00;}
+
+table.striped > tbody > tr:nth-child(odd) {
+  background-color: rgba(170, 213, 213, 0.5);
+}
+
 
 .tag:first-child {
     margin-left: 0;

@@ -1,8 +1,8 @@
 Feature: User can create a new tip
 
-  Scenario: a proper form for adding tips exists
-    Given command new tip is selected
-    Then  a proper form with title, author, url and description is shown
+#  Scenario: a proper form for adding tips exists
+#    Given command new tip is selected
+#    Then  a proper form with title, author, url and description is shown
 
   Scenario: after creating a tip the main page is shown 
     Given command new tip is selected

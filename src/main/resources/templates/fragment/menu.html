@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+          <link th:href="@{/css/icon.css}" rel="stylesheet" />
+    </head>
+  <body>
+      <div class="container">
+        <nav>
+            <div class="nav-wrapper">
+                <a class="brand-logo right" href="/">Lukuvinkki</a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                <ul class="left hide-on-med-and-down" id="nav-mobile">
+                    <li><a href="/tips">Lukuvinkit</a></li>
+                    <li><a href="/addTip">Lisää</a></li>
+                    <li><i class="material-icons">search</i></li>
+                </ul>
+                <form class="red lighten-3" action="#" th:action="@{/search}" method="get">
+                <div class="input-field">
+                  <input id="search" name="keyword" type="text"/>
+                  <label for="search"></label><i class="mdi-navigation-close close"></i>
+                </div>
+                </form>
+                <ul class="side-nav" id="mobile-demo">
+                    <li class="active"><a href="/tips">Lukuvinkit</a></li>
+                    <li><a href="/addTip">Lisää</a></li>
+                    <li><a href="/">Haku</a></li>
+                </ul>
+            </div>
+          </nav>
+      </div>
+<!--<script>
+    $(".button-collapse").sideNav();
+</script>-->
+</body>   
+</html>

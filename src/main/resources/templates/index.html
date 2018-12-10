@@ -4,8 +4,12 @@
         <title>title</title>
     </head>
     <body>
-        <h1>Lukuvinkit</h1>
-        <p>Katso lukuvinkit <a href="/tips">täältä</a></p>
-        <p>Lisää uusi <a href="/addTip">lukuvinkki</a></p>
+        <div th:include="fragment/menu">Menubar</div>
+        <div class="container">
+            <h1>Lukuvinkit</h1>
+            <p>Katso lukuvinkit <a href="/tips">täältä</a></p>
+            <p>Lisää uusi <a href="/addTip">lukuvinkki</a></p>
+        </div>
+        <div th:include="fragment/footer">Footer</div>
     </body>
 </html>

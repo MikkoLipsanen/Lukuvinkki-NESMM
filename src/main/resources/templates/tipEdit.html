@@ -4,13 +4,14 @@
         <title>title</title>
     </head>
     <body>
-        <br/>
+        <div th:include="fragment/menu">Menubar</div>
+        <div class="container">
         <h2>Muokkaa lukuvinkkiä</h2>
         <br/>
         <form action="#" th:action="@{/tips/{tipId}/editTip (tipId=${tipId})}" th:object="${tip}" method="post">
             <table>
                 <tr>
-                    <td>Nimi:</td>
+                    <td width="10%">Nimi:</td>
                     <td><input type="text" th:field="*{title}" /></td>
                 </tr>
                 <tr>
@@ -30,11 +31,13 @@
                     <td><input type="text" th:field="*{rawTags}"  /></td>
                 </tr>
                 <tr>
-                    <td><button type="submit" name="edit" >Tallenna muutokset</button></td>
+                    <td><button class="btn waves-effect waves-light" type="submit" name="edit">Tallenna muutokset
+                            <i class="material-icons right">send</i>
+                        </button></td>
                 </tr>
             </table>
         </form>
-        <br></br>
-        <a href="/tips">Palaa listaussivulle</a>
+        </div>
+        <div th:include="fragment/footer">Footer</div>
     </body>
 </html>
