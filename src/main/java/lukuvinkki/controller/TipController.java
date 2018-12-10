@@ -1,5 +1,6 @@
 package lukuvinkki.controller;
 
+import lukuvinkki.domain.Comment;
 import lukuvinkki.domain.Tag;
 import lukuvinkki.domain.Tip;
 import lukuvinkki.repository.TagRepository;
@@ -32,8 +33,10 @@ public class TipController {
 
     private final TagsByUrlsManager tagsByUrlsManager = new TagsByUrlsManager();
 
-    @GetMapping(value = "/")
-    public String index() {
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index(Model model) {
+        List<Tip> tips = tipRepository.findAllByOrderByCreatedDesc();
+        model.addAttribute("tips", tips);
         return "index";
     }
 
@@ -52,7 +55,7 @@ public class TipController {
             tip.addTag(tag);
         }
         tipRepository.save(tip);
-        return "redirect:/";
+        return "redirect:/tips/" + tip.getId();
     }
 
     @RequestMapping(value = "/tips/{tipId}/editTip", method = RequestMethod.GET)
@@ -89,6 +92,16 @@ public class TipController {
         }
         return "redirect:/tips/" + tipId;
     }
+    
+    @RequestMapping(value = "/tips/{tipId}/deleteTip", method = RequestMethod.POST)
+    public String deleteSubmit(@PathVariable Long tipId, Model model) {
+        Optional<Tip> optional = tipRepository.findById(tipId);
+        if (optional.isPresent()) {
+            Tip tip = optional.get();
+            tipRepository.delete(tip);
+        }
+        return "redirect:/tips";
+    }
 
     @RequestMapping(value = "/tips/{tipId}", method = RequestMethod.GET)
     public String viewTip(@PathVariable Long tipId, Model model) {
@@ -96,14 +109,16 @@ public class TipController {
         if(!optional.isPresent()) return "error";
         Tip tip = optional.get();
         model.addAttribute("tip", tip);
-        return "viewTip";
+        model.addAttribute("newComment", new Comment());
+        model.addAttribute("comments", tip.getComments());
+        return "tipView";
    }
     
    @RequestMapping(value = "/tips", method = RequestMethod.GET)
    public String viewTips(Model model) {
         List<Tip> tips = tipRepository.findAllByOrderByCreatedDesc();
         model.addAttribute("tips", tips);
-        return "tipList";
+        return "index";
     }
 
     @RequestMapping(value = "/tips/{tipId}", method = RequestMethod.POST)
@@ -123,7 +138,7 @@ public class TipController {
         if (keyword.isEmpty()) {
             List<Tip> allTips = tipRepository.findAllByOrderByCreatedDesc();
             model.addAttribute("tips", allTips);
-            return "tipList";
+            return "index";
         }
 
         // PRIMARY SEARCH BY TAGS OF TIPS
@@ -142,7 +157,7 @@ public class TipController {
         primaryTips.addAll(secondaryTips);
 
         model.addAttribute("tips", primaryTips);
-        return "tipList";
+        return "index";
     }
 
     private void addTagsByUrlFor(Tip tip) {

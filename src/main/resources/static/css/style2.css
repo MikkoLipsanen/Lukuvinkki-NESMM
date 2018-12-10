@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+
+nav .hide-on-med-and-down {
+    position: absolute;
+    left: 0px;
+}
+
+nav .brand-logo {
+    position: absolute;
+    right: 0px;
+}
+nav form {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.headline {
+    font-size: larger;
+    color: white;
+    background: #4db6ac; 
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table th, .table td {
+    text-align: left;
+}
+
+
+.table thead tr {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #26a69a;
+    color: white;
+}
+
+.nth-table {
+    border-collapse: collapse;
+    border: 1px solid #824100;
+  }
+  
+  .nth-table thead tr td{
+    background-color: #4db6ac;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+ 
+ .nth-table tr:nth-child(odd){
+        background: #9DCECE;
+    }
+ 
+.nth-table th{
+    border: 1px dotted #FFA346;
+    color: #3E5260;
+    padding:12px;
+  }
+ 
+.nth-table td{
+    border: 1px dashed #000;
+    color: #002F5E;
+    padding:12px;
+    width:90px;
+  }
+
+table a:link {color: tomato;
+            font-weight: bold;}
+table a:visited {color: tomato;
+            font-weight: bold;}
+table a:hover {color: hotpink;}
+table a:active {color: #FF00FF;}
+table a:focus {color: #FFFF00;}
+
+table.striped > tbody > tr:nth-child(odd) {
+  background-color: rgba(170, 213, 213, 0.5);
+}
+
+
+.tag:first-child {
+    margin-left: 0;
+}
+
+.tag {
+    white-space: nowrap;
+    color: white;
+    padding: 4px 8px;
+    padding-left: 10px;
+    display: inline-block;
+    background-color: #df6e21;
+    border-radius: 5px;
+    margin: 4px;
+    position: relative;
+}
+
+.tag::before {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+    content: '';
+    height: 6px;
+    left: 2px;
+    position: absolute;
+    width: 6px;
+    transform: translateY(-50%);
+    top: 50%;
+}

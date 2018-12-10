@@ -2,12 +2,14 @@ Feature: User can search tips
 
   Scenario: user finds tip with proper tag name
     Given tip is created with tag "supertag"
+    And   command view tips is selected
     And   command search is selected
     When  search is done with keyword "supertag"
     Then  list contains tip with tag "supertag"
 
   Scenario: user doesnt find tip with miswritten tag name
     Given tip is created with tag "elamankerta"
+    And   command view tips is selected
     And   command search is selected
     When  search is done with mismatching keyword "elamakerta"
     Then  list doesnt contain tip with tag "elamankerta"

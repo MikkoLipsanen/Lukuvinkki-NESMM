@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:include="fragment/base :: head (title='Lukuvinkki')">
+        <title>title</title>
+    </head>
+    <body>
+        <div th:include="fragment/menu">Menubar</div>
+        <div class="container">
+        <table class="nth-table" width="80%" border="1">
+                <tr>
+                    <td class="title">Otsikko:</td>
+                    <td th:text="${tip.getTitle()}">Title</td>
+                </tr>
+                <tr>
+                    <td class="author">Tekijä:</td>
+                    <td th:text="${tip.getAuthor()}">Author</td>
+                </tr>
+                <tr>
+                    <td class="description">Sisältö:</td>
+                    <td th:text="${tip.getDescription()}">Description</td>
+                </tr>
+                <tr>
+                    <td>Urli:</td>
+                    <td class="url"> <a th:href="${tip.getUrl()}" th:text="${tip.getUrl()}"/>Url</td>
+
+                </tr>
+                <tr>
+                    <td>Tagit:</td>
+                     <td class="tags">
+                        <span class="tag" th:each="tag : ${tip.getTags()}" th:text="${tag.getName()}"></span>
+                    </td>
+                    
+                    
+                </tr>
+                <tr>
+                    <td>Luettu:</td>
+                    <td class="status">
+                        <span th:if="${tip.getStatus() == false}">
+                        <form th:action="@{/tips/{tipId}(tipId=${tip.getId()})}" th:method="POST">
+                            <button type="submit" name="markAsRead">
+                                <i class="material-icons">gavel</i>
+                            </button>
+                        </form>
+                        </span>
+                        <span th:unless="${tip.getStatus() == false}"><i class="material-icons">done</i></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="date">Lisätty:</td>
+                    <td th:text="${tip.getCreated()}">Date</td>
+                </tr>
+                <tr>
+                    <td>Muokkaa vinkkiä:</td>
+                    <td class="edit">
+                            <form th:action="@{/tips/{tipId}/editTip(tipId=${tip.getId()})}" th:method="GET">
+                                <button type="submit" name="edit">
+                                    <i class="material-icons">edit</i>
+                                </button>
+                            </form>
+                    </td>
+                </tr>
+                <tr>
+                <td>Poista vinkki:</td>
+                <td class="delete">
+                    <form th:action="@{/tips/{tipId}/deleteTip (tipId=${tip.getId()})}" th:method="POST">
+                        <button type="submit" name="delete">
+                            <i class="material-icons">delete</i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <form action="#" th:action="@{/comments/{tipId}/addComment(tipId=${tip.getId()})}" th:object="${newComment}" method="post">
+            <table>
+                <tr>
+                    <td>Nimi:</td>
+                    <td><input name="nickname" type="text" th:field="*{nickname}" /></td>
+                </tr>
+                <tr>
+                    <td>Kommentti:</td>
+                    <td><textarea name="content" th:field="*{content}"/></td>
+                </tr>
+                <tr>
+                    <td><button class="btn waves-effect waves-light" type="submit" name="action">Lähetä
+                            <i class="material-icons right">send</i>
+                        </button></td>
+                </tr>
+            </table>
+        </form>
+        <h3>Kommentit</h3>
+        <table class="comment-table" width="80%" border="1">
+            <thead>
+            <tr>
+                <th>Nimi</th>
+                <th>Kommentti</th>
+                <th>Kirjoitettu</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="comment : ${comments}">
+                    <td class="nickname" th:text="${comment.getNickname()}"></td>
+                    <td class="content" th:text="${comment.getContent()}"></td>
+                    <td class="time" th:text="${comment.getCreated()}"></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </body>
+
+</html>
