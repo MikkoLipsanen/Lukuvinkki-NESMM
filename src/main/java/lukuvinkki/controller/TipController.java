@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import lukuvinkki.util.TagsByUrlsManager;
-import java.util.Set;
 
 @Controller
 public class TipController {
