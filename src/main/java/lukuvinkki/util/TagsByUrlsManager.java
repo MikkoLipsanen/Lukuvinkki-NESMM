@@ -1,15 +1,9 @@
 package lukuvinkki.util;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.util.ResourceUtils;
-
 
 public class TagsByUrlsManager {
     private Map<List<String>, List<String>> tagsAndUrls;
