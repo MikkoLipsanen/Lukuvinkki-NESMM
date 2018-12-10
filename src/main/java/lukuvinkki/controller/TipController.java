@@ -90,6 +90,16 @@ public class TipController {
         }
         return "redirect:/tips/" + tipId;
     }
+    
+    @RequestMapping(value = "/tips/{tipId}/deleteTip", method = RequestMethod.POST)
+    public String deleteSubmit(@PathVariable Long tipId, Model model) {
+        Optional<Tip> optional = tipRepository.findById(tipId);
+        if (optional.isPresent()) {
+            Tip tip = optional.get();
+            tipRepository.delete(tip);
+        }
+        return "redirect:/tips";
+    }
 
     @RequestMapping(value = "/tips/{tipId}", method = RequestMethod.GET)
     public String viewTip(@PathVariable Long tipId, Model model) {
