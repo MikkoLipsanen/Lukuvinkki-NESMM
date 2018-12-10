@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <head th:include="fragment/base :: head (title='Lukuvinkin tiedot')">
+    </head>
+    <body>
+        <h2>Lukuvinkin tiedot</h2>
+        <table class="table" width="80%" border="1">
+            <thead>
+                <tr>
+                    <td class="title">Otsikko:</td>
+                    <td th:text="${tip.getTitle()}">Title</td>
+                </tr>
+                <tr>
+                    <td class="author">Tekija:</td>
+                    <td th:text="${tip.getAuthor()}">Author</td>
+                </tr>
+                <tr>
+                    <td class="description">Sisältö:</td>
+                    <td th:text="${tip.getDescription()}">Description</td>
+                </tr>
+                <tr>
+                    <td>Urli:</td>
+                    <td class="url">> <a th:href="${tip.getUrl()}" th:text="${tip.getUrl()}">Url</td>
+
+                </tr>
+                <tr>
+                    <td>Tagit:</td>
+                     <td class="tag">
+                        <span class="tag" th:each="tag : ${tip.getTags()}" th:text="${tag.getName()}"></span>
+                    </td>
+                </tr>
+                <td>Luettu:</td>
+                <td class="status">
+                    <span th:if="${tip.getStatus() == false}">
+                        <form th:action="@{/tips/{tipId}(tipId=${tip.getId()})}" th:method="POST">
+                            <button type="submit" name="markAsRead">Mark as Read</button>
+                        </form>
+                    </span>
+                    <span th:unless="${tip.getStatus() == false}">Read</span>
+                </td>
+                <tr>
+                    <td class="date">Lisätty:</td>
+                    <td th:text="${tip.getCreated()}">Date</td>
+                </tr>
+                <tr>
+                    <td>Muokkaa vinkkiä:</td>
+                    <td class="edit">
+                            <form th:action="@{/tips/{tipId}/editTip(tipId=${tip.getId()})}" th:method="GET">
+                                <button type="submit" name="edit">Edit</button>
+                            </form>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <br><br>
+        <form action="#" th:action="@{/comments/{tipId}/addComment(tipId=${tip.getId()})}" th:object="${newComment}" method="post">
+            <table>
+                <tr>
+                    <td>Nimi:</td>
+                    <td><input name="nickname" type="text" th:field="*{nickname}" /></td>
+                </tr>
+                <tr>
+                    <td>Kommentti:</td>
+                    <td><textarea name="content" type="text" th:field="*{content}"/></td>
+                </tr>
+                <tr>
+                    <td><button type="submit">Lähetä</button></td>
+                </tr>
+            </table>
+        </form>
+        <br><br>
+        <h3>Kommentit</h3>
+        <table class="table" width="80%" border="1">
+            <thead>
+            <tr>
+                <th>Nimi</th>
+                <th>Kommentti</th>
+                <th>Kirjoitettu</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="comment : ${comments}">
+                <td class="nickname" th:text="${comment.getNickname()}"></td>
+                <td class="content" th:text="${comment.getContent()}"></td>
+                <td class="time" th:text="${comment.getCreated()}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <br><br>
+        <p>Katso lukuvinkit <a href="/tips">täältä</a></p>
+        <p>Lisää uusi <a href="/addTip">lukuvinkki</a></p>
+    </body>
+</html>
