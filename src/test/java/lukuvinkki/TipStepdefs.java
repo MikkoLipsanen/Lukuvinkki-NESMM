@@ -104,7 +104,7 @@ public class TipStepdefs extends AbstractStepdefs {
     
     @Then("^a new tip is created with title \"([^\"]*)\" and author \"([^\"]*)\"$")
     public void a_new_tip_is_created_with_title_and_author(String title, String author) throws Throwable {
-        List<WebElement> tipElements = driver.findElements(By.cssSelector(".table tbody tr"));
+        List<WebElement> tipElements = driver.findElements(By.cssSelector(".nth-table tbody tr"));
         assertTipTableElement(tipElements.get(0), title, author);
     }
 
