@@ -42,6 +42,12 @@ public class NavigationStepdefs extends AbstractStepdefs {
         WebElement webElement = driver.findElement(By.name("submit"));
         webElement.click();
     }
+    
+    @When("^command delete tip is selected$")
+    public void command_delete_tip_is_selected() throws Throwable {
+        WebElement webElement = driver.findElement(By.name("delete"));
+        webElement.click();
+    }
 
     @When("^title \"([^\"]*)\" is clicked$")
     public void title_is_clicked(String title) throws Throwable {

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class TipStepdefs extends AbstractStepdefs {
@@ -69,13 +70,19 @@ public class TipStepdefs extends AbstractStepdefs {
     public void field_is_cleared(String field) throws Throwable {
         clearTipField(field);
     }
+    
+    @Then("^the list of tips is shown$")
+    public void the_list_of_tips_is_shown() throws Throwable {
+        WebElement tipTable = driver.findElement(By.cssSelector(".nth-table"));
+        assertTrue(tipTable != null);
+    }
 
     @Then("^page contains title \"([^\"]*)\", author \"([^\"]*)\", description \"([^\"]*)\" and url \"([^\"]*)\"$")
-        public void view_tip_page_showing_tip_information(String title, String author, String description, String url) {
-        pageContains(title);
-        pageContains(author);
-        pageContains(description);
-        pageContains(url);
+    public void view_tip_page_showing_tip_information(String title, String author, String description, String url) {
+        assertPageContains(title);
+        assertPageContains(author);
+        assertPageContains(description);
+        assertPageContains(url);
     }
 
     @Then("^page contains a list of tips with tag matches shown first")
@@ -146,10 +153,10 @@ public class TipStepdefs extends AbstractStepdefs {
 
     @Then("^the page of the new tip is shown$")
     public void page_of_tip_is_shown() throws Throwable {
-        pageContains("Otsikko:");
-        pageContains("Tekijä:");
-        pageContains("Muokkaa vinkkiä:");
-        pageContains("Poista vinkki:");
+        assertPageContains("Otsikko:");
+        assertPageContains("Tekijä:");
+        assertPageContains("Muokkaa vinkkiä:");
+        assertPageContains("Poista vinkki:");
     }
 
     @Then("^list doesnt contain tip with tag \"([^\"]*)\"$")
@@ -159,10 +166,10 @@ public class TipStepdefs extends AbstractStepdefs {
 
     @Then("^view tip page is shown$")
     public void view_tip_page_is_shown() throws Throwable {
-        pageContains("Otsikko:");
-        pageContains("Tekijä:");
-        pageContains("Muokkaa vinkkiä:");
-        pageContains("Poista vinkki:");
+        assertPageContains("Otsikko:");
+        assertPageContains("Tekijä:");
+        assertPageContains("Muokkaa vinkkiä:");
+        assertPageContains("Poista vinkki:");
     }
 
     @Then("^the new tip has only two tags")
@@ -173,18 +180,26 @@ public class TipStepdefs extends AbstractStepdefs {
     }
 
     @Then("^page contains title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\", description \"([^\"]*)\", tag1 \"([^\"]*)\" and tag2 \"([^\"]*)\"$")
-           public void view_tip_page_showing_edited_information(String title, String author, String description, String url, String tag1, String tag2) {
-           pageContains(title);
-           pageContains(author);
-           pageContains(description);
-           pageContains(url);
-           pageContains(tag1);
-           pageContains(tag2);
+    public void page_contains_title_author_url_description_tag1_and_tag2(String title, String author, String description, String url, String tag1, String tag2) {
+        assertPageContains(title);
+        assertPageContains(author);
+        assertPageContains(description);
+        assertPageContains(url);
+        assertPageContains(tag1);
+        assertPageContains(tag2);
     }
 
     @Then("^page does not contain deleted field content \"([^\"]*)\"$")
-            public void page_does_not_contain_deleted_content(String content) throws Throwable {
-            assertTrue(!driver.getPageSource().contains(content));
+    public void page_does_not_contain_deleted_content(String content) throws Throwable {
+        assertPageDoesntContain(content);
+    }
+    
+    @Then("^the page does not contain a tip with title \"([^\"]*)\", author \"([^\"]*)\", url \"([^\"]*)\" and description \"([^\"]*)\"$")
+    public void the_page_does_not_contain_a_tip_with_title_author_url_and_description(String title, String author, String url, String desc) {
+        assertPageDoesntContain(title);
+        assertPageDoesntContain(author);
+        assertPageDoesntContain(desc);
+        assertPageDoesntContain(url);
     }
 
 
@@ -278,8 +293,12 @@ public class TipStepdefs extends AbstractStepdefs {
         tipRepository.save(dummyTip4);
     }
 
-    private void pageContains(String content) {
+    private void assertPageContains(String content) {
         assertTrue(driver.getPageSource().contains(content));
+    }
+    
+    private void assertPageDoesntContain(String content) {
+        assertFalse(driver.getPageSource().contains(content));
     }
 
 }
