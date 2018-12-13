@@ -2,7 +2,7 @@ Feature: User can view all comments connected to a tip
 
   Scenario: added comments can be viewed on the tip page
     Given there are some tips created
-    And   user is on a tip a page
+    And   user is on a tip page
     When  new comment is created with nickname "Foo Bar" and content "Lorem ipsum"
     And   new comment is created with nickname "Mars Bar" and content "muspi meroL"
     Then  page contains nickname "Foo Bar" and content "Lorem ipsum"
@@ -10,7 +10,7 @@ Feature: User can view all comments connected to a tip
 
   Scenario: latest comment is listed first
     Given there are some tips created
-    And   user is on a tip a page
+    And   user is on a tip page
     When  new comment is created with nickname "Foo Bar" and content "Lorem ipsum"
     And   new comment is created with nickname "Mars Bar" and content "muspi meroL"
     And   new comment is created with nickname "Bar Man" and content "romanus sum"
