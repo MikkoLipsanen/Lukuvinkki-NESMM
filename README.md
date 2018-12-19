@@ -32,3 +32,7 @@ http://localhost:8080/
 [Sprint 3](https://docs.google.com/spreadsheets/d/1cA0eJKsMFbv5t4-NO9uqrfpEuOwMUji-7ckIPtxH4fo/edit#gid=1812894312?usp=sharing)
 
 [Sprint 4](https://docs.google.com/spreadsheets/d/1cA0eJKsMFbv5t4-NO9uqrfpEuOwMUji-7ckIPtxH4fo/edit#gid=622067595?usp=sharing)
+
+## Miniprojektin loppuraportti
+
+[Raportti](https://docs.google.com/document/d/1vUkloz4oYEFpylUsrvbWD8g2gSyFMnB2ZPjQN50lbUg/edit?usp=sharing)
